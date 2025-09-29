@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, Routes } from 'react-router';
 import MainLayout from '../layouts/MainLayout';
 import Home from '../pages/Home';
-import Jobs from '../pages/jobs';
+import Jobs from '../pages/Jobs';
 import Category from '../pages/Category';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
