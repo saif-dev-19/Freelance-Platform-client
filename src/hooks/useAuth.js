@@ -16,6 +16,7 @@ const useAuth = () =>{
 
     useEffect(() => {
         if(authTokens) fetchUserProfile();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     },[authTokens]);
 
     const handleAPIError = (
