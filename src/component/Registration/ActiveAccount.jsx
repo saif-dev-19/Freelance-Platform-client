@@ -1,7 +1,8 @@
 import React, { useState,useEffect } from 'react';
 import { useNavigate, useParams } from 'react-router';
 import ErrorAlert from '../ErrorAlert';
-import apiClient from '../../api_services/api-Client';
+import apiClient from '../../api_services/api-client';
+
 
 
 const ActiveAccount = () => {
@@ -12,6 +13,7 @@ const ActiveAccount = () => {
 
     useEffect(() => {
         apiClient.post("/auth/users/activation/", {uid,token})
+        // eslint-disable-next-line no-unused-vars
         .then((res) => {
             setMessage("Account Activate successfully");
             setTimeout(() => navigate("/login"),3000)
