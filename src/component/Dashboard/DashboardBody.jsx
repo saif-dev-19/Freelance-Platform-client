@@ -6,11 +6,11 @@ import useAuthContext from '../../hooks/useAuthContext';
 
 const DashboardBody = () => {
   const {user} = useAuthContext();
+  
   return (
-    
     <div className=''>
 
-        {user.role === "Seller" ? <SellerDashboard /> : user.role === "Buyer" ? <BuyerDashboard /> : <AdminDashboard />} 
+      {user.role === "Seller" ? <SellerDashboard /> : user.role === "Buyer" ? <BuyerDashboard /> : <AdminDashboard />}
         
     </div>
   );

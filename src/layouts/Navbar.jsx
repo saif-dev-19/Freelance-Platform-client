@@ -32,10 +32,11 @@ const Navbar = () => {
         <div className="flex-1 hidden md:flex justify-center">
           <div className="flex gap-6">
             <Link
-              to="/dashboard"
+              to={user ? ("/dashboard") : ("/")}
               className="font-medium text-gray-600 hover:text-green-700 transition"
             >
-              Dashboard
+              {user && ("Dashboard")}
+              {!user && ("Home")}
             </Link>
             <Link
               to="/services"
