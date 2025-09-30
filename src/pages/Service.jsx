@@ -1,6 +1,6 @@
 import Services from '../component/Services/Services';
 
-const Jobs = () => {
+const Service = () => {
     return (
         <div>
             <Services />
@@ -8,4 +8,4 @@ const Jobs = () => {
     );
 };
 
-export default Jobs;
+export default Service;

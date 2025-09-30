@@ -2,7 +2,6 @@ import React from 'react';
 import { Route, Routes } from 'react-router';
 import MainLayout from '../layouts/MainLayout';
 import Home from '../pages/Home';
-import Jobs from '../pages/Jobs';
 import Category from '../pages/Category';
 import Login from '../pages/Login';
 import Register from '../pages/Register';
@@ -16,6 +15,7 @@ import Orders from '../pages/Orders';
 import ConfirmOrderPage from '../pages/ConfirmOrderPage';
 import PaymentSuccess from '../pages/PaymentSuccess';
 import MyServices from '../pages/MyServices';
+import Service from '../pages/Service';
 
 
 const AppRoutes = () => {
@@ -25,7 +25,7 @@ const AppRoutes = () => {
 
             <Route element={<MainLayout />}>
                 <Route path='/' element={<Home />} />
-                <Route path='services' element={<Jobs />} />
+                <Route path='services' element={<Service />} />
                 <Route path='categories' element={<Category />} />
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
