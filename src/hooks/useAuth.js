@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
-import apiClient from "../api_services/api-Client";
+import apiClient from "../api_services/api-client";
+
 
 
 const useAuth = () =>{
