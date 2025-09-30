@@ -8,7 +8,7 @@ import useFetchCategories from "../../hooks/useFetchCategories"
 import FilterSection from "./FilterSection"
 import ServiceItem from "./ServiceItem"
 import AuthContext from "../../context/AuthContext"
-import apiClient from "../../api_services/api-Client"
+import apiClient from "../../api_services/api-client"
 
 
 

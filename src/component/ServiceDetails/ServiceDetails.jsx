@@ -4,12 +4,13 @@ import { Heart } from 'lucide-react';
 
 import ServiceImages from './ServiceImages';
 import { useNavigate, useParams } from 'react-router';
-import apiClient from '../../api_services/api-Client';
+import apiClient from '../../api_services/api-client';
 
 
 const ServiceDetails = () =>{
     const {serviceID} = useParams();
     const [service, setService] = useState(null);
+    // eslint-disable-next-line no-unused-vars
     const [loading,setLoading] = useState(false);
     const navigate = useNavigate();
 
