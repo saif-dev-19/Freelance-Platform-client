@@ -38,7 +38,7 @@ const adminMenus = [
 const sellerMenus = [
   { to: "/dashboard", icon: FiBarChart2, label: "Dashboard" },
   { to: "/dashboard/my-services", icon: FiBox, label: "My Services" },
-  { to: "/dashboard/services/add", icon: FiPlusCircle, label: "Add Service" },
+  { to: "/dashboard/add-service", icon: FiPlusCircle, label: "Add Service" },
   { to: "/dashboard/orders", icon: FiClipboard, label: "Orders" },
   { to: "/reviews", icon: FiStar, label: "Reviews" },
 ];

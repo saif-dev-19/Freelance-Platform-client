@@ -2,8 +2,10 @@
 import { StarIcon, ChatBubbleLeftIcon } from "@heroicons/react/24/solid"
 import { Link } from "react-router"
 import default_img from "../../assets/images/default.png"
+import useAuthContext from "../../hooks/useAuthContext"
 
 const ServiceCard = ({ service }) => {
+  const {user} = useAuthContext();
   return (
     <div className="card w-70 h-[450px] bg-gray-200 text-black shadow-lg hover:shadow-xl transition-shadow duration-300">
       <figure className="px-4 pt-8 ">
@@ -38,9 +40,11 @@ const ServiceCard = ({ service }) => {
           <div className="text-right">
             <span className="text-lg font-bold text-neutral">${service.price}</span>
           </div>
-          <Link to={`/service`} className="btn btn-sm btn-outline btn-neutral gap-1">
-            Order Now
-          </Link>
+          {user?.role === "Buyer" &&(
+            <Link to={`/service`} className="btn btn-sm btn-outline btn-neutral gap-1">
+              Order Now
+            </Link>
+          )}
         </div>
       </div>
     </div>

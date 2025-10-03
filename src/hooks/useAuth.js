@@ -105,7 +105,9 @@ const useAuth = () =>{
         localStorage.removeItem("authTokens")
     }
 
-    return {user,errorMsg,loginUser, registerUser, logoutUser,fetchUserProfile,updateProfile};
+    const clearError = () => setErrorMsg(null);
+
+    return {user,errorMsg,loginUser, registerUser, logoutUser,fetchUserProfile,updateProfile,clearError};
 }
 
 export default useAuth;

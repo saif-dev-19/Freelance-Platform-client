@@ -16,6 +16,7 @@ import ConfirmOrderPage from '../pages/ConfirmOrderPage';
 import PaymentSuccess from '../pages/PaymentSuccess';
 import MyServices from '../pages/MyServices';
 import Service from '../pages/Service';
+import AddService from '../pages/AddService';
 
 
 const AppRoutes = () => {
@@ -47,7 +48,7 @@ const AppRoutes = () => {
                 <Route path='orders' element={<Orders />} />
                 <Route path='my-services' element={<MyServices />} />
                 <Route path='payment/success' element={<PaymentSuccess />} />
-
+                <Route path='add-service' element={<AddService />} />
 
             </Route>
 

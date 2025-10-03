@@ -5,6 +5,7 @@ import { Heart } from 'lucide-react';
 import ServiceImages from './ServiceImages';
 import { useNavigate, useParams } from 'react-router';
 import apiClient from '../../api_services/api-client';
+import useAuthContext from '../../hooks/useAuthContext';
 
 
 const ServiceDetails = () =>{
@@ -13,6 +14,8 @@ const ServiceDetails = () =>{
     // eslint-disable-next-line no-unused-vars
     const [loading,setLoading] = useState(false);
     const navigate = useNavigate();
+
+    const {user} = useAuthContext();
 
     useEffect(()=>{
         setLoading(true);
@@ -134,8 +137,13 @@ const ServiceDetails = () =>{
             </div>
 
             <div className="mt-6">
-              <button onClick={handleOrderNow} className="btn btn-primary btn-block btn-lg">Order Now</button>
-              <button className="btn btn-outline btn-block mt-3">Contact Seller</button>
+              {user?.role === "Buyer" && (
+                  <div>
+                    <button onClick={handleOrderNow} className="btn btn-primary btn-block btn-lg">Order Now</button>
+                    <button className="btn btn-outline btn-block mt-3">Contact Seller</button>
+                  </div>
+              )}
+              
             </div>
 
             <div className="mt-4 text-xs text-muted-foreground">
@@ -143,14 +151,6 @@ const ServiceDetails = () =>{
             </div>
           </div>
 
-          {/* <div className="p-4 bg-base-200 rounded-lg">
-            <h4 className="font-medium">What you get</h4>
-            <ul className="mt-2 text-sm space-y-2">
-              <li>✅ Figma Source Files</li>
-              <li>✅ Clickable Prototype</li>
-              <li>✅ Handoff-ready assets</li>
-            </ul>
-          </div> */}
 
           <div className="p-4 bg-base-100 rounded-lg shadow-sm text-sm">
             <h4 className="font-medium">Seller Info</h4>
@@ -173,7 +173,9 @@ const ServiceDetails = () =>{
             <div className="text-lg font-bold">${service?.price}</div>
           </div>
           <div className="flex-1">
-            <button onClick={handleOrderNow} className="btn btn-primary btn-block">Order Now</button>
+            {user?.role === "Buyer" && (
+              <button onClick={handleOrderNow} className="btn btn-primary btn-block">Order Now</button>
+            )}    
           </div>
         </div>
       </div>

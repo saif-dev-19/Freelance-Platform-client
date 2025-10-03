@@ -14,7 +14,7 @@ const Login = () => {
     formState: { errors },
   } = useForm();
 
-  const { errorMsg, loginUser } = useAuthContext();
+  const { errorMsg, loginUser,clearError } = useAuthContext();
 
   const onSubmit = async (data) => {
     setLoading(true);
@@ -22,7 +22,8 @@ const Login = () => {
       const response = await loginUser(data);
       // navigate("/dashboard");
       if (response && response.success) {
-        navigate("/dashboard"); 
+        clearError();
+        navigate("/dashboard");    
       }
     } catch (error) {
       console.log("Login failed:", error);
