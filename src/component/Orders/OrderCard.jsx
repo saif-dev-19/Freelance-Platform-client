@@ -37,6 +37,7 @@ const OrderCard = ({ order, onCancel }) => {
 
       if(response.data.payment_url){
         setLoading(false)
+        console.log("url",response.data.payment_url);
         window.location.href = response.data.payment_url;
       }else{
         alert("Payment Failed")

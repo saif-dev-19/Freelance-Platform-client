@@ -34,10 +34,14 @@ const MyServices= () => {
       }
     };
 
-    if (user) fetchServices();
+    if (user.role === "Seller") fetchServices();
   }, [user]);
+
+  
     const {loading,totalpages} = useFetchServices(currentpage,selectedCategory,searchQuery,sortOrder);
     const categories = useFetchCategories();
+
+
     // const fetchproducts =()=>{
     //     setLoading(true)
     //     apiClient.get(`/services/?page=${currentpage}`)
