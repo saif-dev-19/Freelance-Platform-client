@@ -23,16 +23,15 @@ const buyerMenus = [
   { to: "/dashboard", icon: FiBarChart2, label: "Dashboard" },
   { to: "/services", icon: FiBox, label: "Services" },
   { to: "/dashboard/orders", icon: FiClipboard, label: "Orders" },
-  { to: "/reviews", icon: FiStar, label: "Reviews" },
 ];
 
 const adminMenus = [
   { to: "/dashboard", icon: FiBarChart2, label: "Dashboard" },
-  { to: "/users", icon: FiUsers, label: "Users" },
+  { to: "/dashboard/manage-user", icon: FiUsers, label: "Users" },
   { to: "/categories", icon: FiTag, label: "Categories" },
-  { to: "/categories/add", icon: FiPlusCircle, label: "Add Category" },
+  { to: "/dashboard/add-category", icon: FiPlusCircle, label: "Add Category" },
   { to: "/dashboard/orders", icon: FiClipboard, label: "Orders" },
-  { to: "/reviews", icon: FiStar, label: "Reviews" },
+
 ];
 
 const sellerMenus = [
@@ -40,7 +39,6 @@ const sellerMenus = [
   { to: "/dashboard/my-services", icon: FiBox, label: "My Services" },
   { to: "/dashboard/add-service", icon: FiPlusCircle, label: "Add Service" },
   { to: "/dashboard/orders", icon: FiClipboard, label: "Orders" },
-  { to: "/reviews", icon: FiStar, label: "Reviews" },
 ];
 
 

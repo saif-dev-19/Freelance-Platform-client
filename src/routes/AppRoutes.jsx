@@ -17,6 +17,12 @@ import PaymentSuccess from '../pages/PaymentSuccess';
 import MyServices from '../pages/MyServices';
 import Service from '../pages/Service';
 import AddService from '../pages/AddService';
+import About from '../pages/About';
+import Contact from '../pages/Contact';
+import AddCategory from '../pages/AddCategory';
+import ManageUsers from '../pages/ManageUsers';
+import ManageServices from '../pages/ManageServices';
+import EditService from '../pages/EditService';
 
 
 const AppRoutes = () => {
@@ -27,6 +33,8 @@ const AppRoutes = () => {
             <Route element={<MainLayout />}>
                 <Route path='/' element={<Home />} />
                 <Route path='services' element={<Service />} />
+                <Route path='about' element={<About />} />
+                <Route path='contact' element={<Contact />} />
                 <Route path='categories' element={<Category />} />
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
@@ -49,7 +57,10 @@ const AppRoutes = () => {
                 <Route path='my-services' element={<MyServices />} />
                 <Route path='payment/success' element={<PaymentSuccess />} />
                 <Route path='add-service' element={<AddService />} />
-
+                <Route path='add-category' element={<AddCategory />} />  
+                <Route path='manage-user' element={<ManageUsers />} /> 
+                <Route path='manage-service' element={<ManageServices />} />
+                <Route path="services/edit/:id" element={<EditService />} /> 
             </Route>
 
         </Routes>

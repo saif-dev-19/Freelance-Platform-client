@@ -8,10 +8,9 @@ const Navbar = () => {
 
   const getRoleBadgeColor = (role) => {
     switch (role) {
-      case "admin": return 'badge-error';
       case 'Seller': return 'badge-warning';
       case 'Buyer': return 'badge-info';
-      default: return 'badge-neutral';
+      default: return 'badge-error';
     }
   };
 
@@ -121,7 +120,7 @@ const Navbar = () => {
                     <div className="font-semibold text-black">{user?.name}</div>
                     <div className="text-sm text-black">{user?.email}</div>
                     <div className={`badge badge-sm mt-1 ${getRoleBadgeColor(user?.role)}`}>
-                      {user?.role?.toUpperCase()}
+                      {user?.role?.toUpperCase() || "ADMIN"}
                     </div>
               </div>
             )}

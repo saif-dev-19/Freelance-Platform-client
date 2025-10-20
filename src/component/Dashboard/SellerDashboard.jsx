@@ -1,47 +1,62 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import useAuthContext from '../../hooks/useAuthContext';
 import WelcomeCard from './shared/WelcomeCard';
 import StatCard from './shared/StatCard';
 import QuickAction from './shared/QuickAction';
+import useFetchSellerService from '../../hooks/useFetchSellerService';
+import authApiClient from '../../api_services/auth-api-client';
+import useFetchOrders from '../../hooks/useFetchOrders';
+import useFetchRecentOrders from '../../hooks/useFetchRecentOrders';
 
 
 const SellerDashboard = () => {
   const { user } = useAuthContext();
+  const {services} = useFetchSellerService();
+  const [totalearnings,setTotalEarninngs] = useState(0)
+  const [loading,setLoading] = useState(false)
+  const{orders} = useFetchOrders();
+
+  const{recentOrders} = useFetchRecentOrders();
+
+  useEffect(() => {
+    setLoading(true)
+    try{
+      authApiClient.get("/seller-earnings/").
+      then((res) => setTotalEarninngs(res.data.total_earnings))
+    }catch(error){
+      console.log(error);
+    }finally{
+      setLoading(false)
+    }
+  },[])
 
   const stats = [
-    { title: 'My Products', value: '156', icon: 'bi-box-seam', color: 'bg-primary'},
-    { title: 'Sales', value: '$12,847', icon: 'bi-currency-dollar', color: 'bg-success' },
-    { title: 'Orders', value: '284', icon: 'bi-cart-check', color: 'bg-warning'},
-    { title: 'Customers', value: '1,247', icon: 'bi-person-hearts', color: 'bg-info' }
+    { title: 'My Services', value: loading ? "..." : services.length , icon: 'bi-box-seam', color: 'bg-primary'},
+    { title: 'Sales', value: loading ? "..." : totalearnings , icon: 'bi-currency-dollar', color: 'bg-success' },
+    { title: 'Orders', value: loading ? "..." : orders.length , icon: 'bi-cart-check', color: 'bg-warning'},
   ];
 
   const quickActions = [
-    { title: 'Add Services', description: 'List a new product for sale', icon: 'bi-plus-circle', color: 'bg-primary' },
-    { title: 'View Orders', description: 'Check recent customer orders', icon: 'bi-cart-check', color: 'bg-success' },
+    { to:"/dashboard/add-service", title: 'Add Service', description: 'Discover new services to buy', icon: 'bi-search', color: 'bg-primary' },
+    { to:"/dashboard/orders", title: 'My Orders', description: 'Track your recent order', icon: 'bi-cart-check', color: 'bg-success' },
   ];
 
-  const recentOrders = [
-    { id: '#ORD-001', customer: 'Alice Johnson', product: 'Wireless Headphones', amount: '$89.99', status: 'Processing', time: '2 minutes ago' },
-    { id: '#ORD-002', customer: 'Bob Smith', product: 'Smart Watch', amount: '$199.99', status: 'Shipped', time: '1 hour ago' },
-    { id: '#ORD-003', customer: 'Carol Davis', product: 'Bluetooth Speaker', amount: '$45.99', status: 'Delivered', time: '3 hours ago' },
-    { id: '#ORD-004', customer: 'David Wilson', product: 'Phone Case', amount: '$19.99', status: 'Processing', time: '5 hours ago' }
-  ];
 
-  const topProducts = [
-    { name: 'Autocad 2D 3D', sales: 45, revenue: '$4,049.55', trend: '+12%', image: '' },
-    { name: 'Content Writing', sales: 32, revenue: '$6,399.68', trend: '+8%', image: '' },
-    { name: 'SEO Keyword Research', sales: 28, revenue: '$1,287.72', trend: '+15%', image: '' },
-    { name: 'UI/UX Design', sales: 67, revenue: '$1,339.33', trend: '+5%', image: '' }
-  ];
+  // const topProducts = [
+  //   { name: 'Autocad 2D 3D', sales: 45, revenue: '$4,049.55', trend: '+12%', image: '' },
+  //   { name: 'Content Writing', sales: 32, revenue: '$6,399.68', trend: '+8%', image: '' },
+  //   { name: 'SEO Keyword Research', sales: 28, revenue: '$1,287.72', trend: '+15%', image: '' },
+  //   { name: 'UI/UX Design', sales: 67, revenue: '$1,339.33', trend: '+5%', image: '' }
+  // ];
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'Processing': return 'badge-warning';
-      case 'Shipped': return 'badge-info';
-      case 'Delivered': return 'badge-success';
-      default: return 'badge-neutral';
-    }
-  };
+  // const getStatusColor = (status) => {
+  //   switch (status) {
+  //     case 'Processing': return 'badge-warning';
+  //     case 'Shipped': return 'badge-info';
+  //     case 'Delivered': return 'badge-success';
+  //     default: return 'badge-neutral';
+  //   }
+  // };
 
   return (
     <div className="space-y-6">
@@ -65,7 +80,7 @@ const SellerDashboard = () => {
           <h2 className="text-lg font-semibold text-neutral mb-4">Seller Quick Actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {quickActions.map((action, index) => (
-              <QuickAction key={index} {...action} onClick={() => console.log(`Seller action: ${action.title}`)} />
+              <QuickAction key={index} {...action}/>
             ))}
           </div>
         </div>
@@ -75,40 +90,64 @@ const SellerDashboard = () => {
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Orders */}
         <div className="card bg-white shadow-sm border border-base-300">
-          <div className="card-body p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-neutral">Recent Orders</h3>
-              <button className="btn btn-sm btn-ghost">
-                <i className="bi bi-arrow-right"></i>
-              </button>
-            </div>
-            <div className="space-y-4">
-              {recentOrders.map((order, index) => (
-                <div key={index} className="flex items-center gap-3 p-3 rounded-lg hover:bg-base-100 transition-colors">
-                  <div className="w-10 h-10 bg-primary-100 rounded-lg flex items-center justify-center">
-                    <i className="bi bi-cart-check text-primary-600"></i>
+      <div className="card-body p-6">
+        <h2 className="text-lg font-semibold text-neutral mb-4">
+          Recent Orders
+        </h2>
+
+        {loading ? (
+          <div className="flex justify-center items-center py-10">
+            <span className="loading loading-spinner text-neutral loading-xl"></span>
+          </div>
+        ) : recentOrders.length > 0 ? (
+          <ul className="space-y-4">
+            {recentOrders.map((order, index) => (
+              <li
+                key={order.id}
+                className="flex items-center justify-between border-b border-gray-200 pb-4"
+              >
+                {/* Avatar */}
+                <div className="flex items-center gap-4">
+                  <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
+                    {order.buyer.charAt(0)}
                   </div>
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2">
-                      <p className="text-sm font-medium text-neutral">{order.id}</p>
-                      <div className={`badge badge-xs ${getStatusColor(order.status)}`}>
-                        {order.status}
-                      </div>
-                    </div>
-                    <p className="text-xs text-neutral/70">{order.customer} • {order.product}</p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm font-medium text-neutral">{order.amount}</p>
-                    <p className="text-xs text-neutral/70">{order.time}</p>
+                  <div className="flex flex-col">
+                    <span className="font-medium">
+                      {index + 1}. {order.buyer}
+                    </span>
+                    <span className="text-gray-500 text-sm">{order.service}</span>
+                    <span className="text-gray-400 text-xs">{order.time}</span>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
+
+                {/* Order Info */}
+                <div className="flex flex-col items-end">
+                  <span className="font-semibold">{order.amount}</span>
+                  <span
+                    className={`badge ${
+                      order.status === "Processing"
+                        ? "badge-warning"
+                        : order.status === "Shipped"
+                        ? "badge-info"
+                        : order.status === "Delivered"
+                        ? "badge-success"
+                        : "badge-neutral"
+                    }`}
+                  >
+                    {order.status}
+                  </span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-500">No recent orders found.</p>
+        )}
+      </div>
+    </div>
 
         {/* Top Products */}
-        <div className="card bg-white shadow-sm border border-base-300">
+        {/* <div className="card bg-white shadow-sm border border-base-300">
           <div className="card-body p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-neutral">Top Services</h3>
@@ -140,10 +179,10 @@ const SellerDashboard = () => {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
 
       {/* Sales Analytics */}
-      <div className="card bg-white shadow-sm border border-base-300">
+      {/* <div className="card bg-white shadow-sm border border-base-300">
         <div className="card-body p-6">
           <h3 className="text-lg font-semibold text-neutral mb-4">Sales Performance</h3>
           <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
@@ -181,7 +220,7 @@ const SellerDashboard = () => {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );

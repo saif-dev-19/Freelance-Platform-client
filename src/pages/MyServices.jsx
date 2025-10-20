@@ -2,13 +2,12 @@
 import { StarIcon, ChatBubbleLeftIcon } from "@heroicons/react/24/solid"
 import { Link } from "react-router"
 import Pagination from "../component/Services/Pagination"
-import { useEffect, useState } from "react"
+import { useState } from "react"
 import useFetchServices from "../hooks/useFetchServices"
 import useFetchCategories from "../hooks/useFetchCategories"
 import FilterSection from "../component/Services/FilterSection"
 import ServiceItem from "../component/Services/ServiceItem"
-import apiClient from "../api_services/api-client"
-import useAuthContext from "../hooks/useAuthContext"
+import useFetchSellerService from "../hooks/useFetchSellerService"
 
 
 
@@ -18,26 +17,9 @@ const MyServices= () => {
     const [selectedCategory,setSelectedCategory] = useState("")
     const [searchQuery,setSearchQuery] =useState("")
     const [sortOrder,setSortOrder] = useState("")
-    const {user} = useAuthContext();
-    const [services, setServices] = useState([]);
-
-  useEffect(() => {
-    const fetchServices = async () => {
-      try {
-        const response = await apiClient.get("/services/");
-        const myServices = response.data.results.filter(
-          (service) => service.seller === user.id || service.seller?.id === user.id
-        );
-        setServices(myServices);
-      } catch (error) {
-        console.error("Failed to fetch services", error);
-      }
-    };
-
-    if (user.role === "Seller") fetchServices();
-  }, [user]);
-
-  
+    
+    const {services} = useFetchSellerService();
+    
     const {loading,totalpages} = useFetchServices(currentpage,selectedCategory,searchQuery,sortOrder);
     const categories = useFetchCategories();
 
@@ -84,7 +66,7 @@ const MyServices= () => {
         {!loading &&(
             <div className=" px-4 py-8 grid gap-4 grid-cols-[repeat(auto-fit,minmax(250px,1fr))]">
                     {services.map((service) => (
-                        <ServiceItem service={service} />
+                        <ServiceItem key={service.id} service={service} refreshServices={useFetchServices}/>
                     ))}
             </div>
         )}

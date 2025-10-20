@@ -4,30 +4,35 @@ import StatCard from '../Dashboard/shared/StatCard';
 import QuickAction from '../Dashboard/shared/QuickAction';
 import WelcomeCard from '../Dashboard/shared/WelcomeCard';
 import useAuthContext from '../../hooks/useAuthContext';
+import useFetchUsers from '../../hooks/useFetchUsers';
+import useFetchOrders from '../../hooks/useFetchOrders';
+import { useEffect, useState } from 'react';
+import apiClient from '../../api_services/api-client';
 
 const AdminDashboard = () => {
   const { user } = useAuthContext();
-    console.log(user);
+  const{summary} = useFetchUsers();
+  const{orders} = useFetchOrders();
+  const[services,setServices] =useState([]);
+
+  useEffect(() => {
+    apiClient.get("/services/").then((res) => setServices(res.data))
+  },[setServices])
+  console.log("admin",services);
+
+  console.log("summari",summary);
   const stats = [
-    { title: 'Total Users', value: '2,847', icon: 'bi-people', color: 'bg-primary' },
-    { title: 'Revenue', value: '$45,231', icon: 'bi-currency-dollar', color: 'bg-success'},
-    { title: 'Orders', value: '1,423', icon: 'bi-cart-check', color: 'bg-warning'},
-    { title: 'Services', value: '892', icon: 'bi-box-seam', color: 'bg-info'}
+    { title: 'Total Users', value: summary.total_users, icon: 'bi-people', color: 'bg-primary' },
+    { title: 'Revenue', value: `$${summary.total_revenue}`,icon: 'bi-currency-dollar', color: 'bg-success'},
+    { title: 'Orders', value: orders.length, icon: 'bi-cart-check', color: 'bg-warning'},
+    { title: 'Services', value: services.count, icon: 'bi-box-seam', color: 'bg-info'}
   ];
 
   const quickActions = [
-    { title: 'Manage User', description: 'Create a new user account', icon: 'bi-person-plus', color: 'bg-primary' },
-    { title: 'View Reports', description: 'Check system analytics', icon: 'bi-graph-up', color: 'bg-success' },
-    { title: 'Manage Services', description: 'Add or edit products', icon: 'bi-box-seam', color: 'bg-warning' },
-    { title: 'System Settings', description: 'Configure system preferences', icon: 'bi-gear', color: 'bg-info' }
+    { to:"/dashboard/manage-user" , title: 'Manage User', description: 'Create a new user account', icon: 'bi-person-plus', color: 'bg-primary' },
+    { to:"/dashboard/manage-service" , title: 'Manage Services', description: 'Delete Services', icon: 'bi-box-seam', color: 'bg-warning' },
   ];
 
-  const recentUsers = [
-    { name: 'John Smith', email: 'john@example.com', role: 'Buyer', time: '2 minutes ago', avatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=40&h=40&fit=crop&crop=face' },
-    { name: 'Sarah Johnson', email: 'sarah@example.com', role: 'Seller', time: '5 minutes ago', avatar: 'https://images.unsplash.com/photo-1494790108755-2616b612b786?w=40&h=40&fit=crop&crop=face' },
-    { name: 'Mike Wilson', email: 'mike@example.com', role: 'Buyer', time: '10 minutes ago', avatar: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=40&h=40&fit=crop&crop=face' },
-    { name: 'Emma Davis', email: 'emma@example.com', role: 'Seller', time: '15 minutes ago', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=40&h=40&fit=crop&crop=face' }
-  ];
 
 
   return (
@@ -58,43 +63,88 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-      {/* Admin Specific Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Recent Users */}
-        <div className="card bg-white shadow-sm border border-base-300">
-          <div className="card-body p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-neutral">Recent Users</h3>
-              <button className="btn btn-sm btn-ghost">
-                <i className="bi bi-arrow-right"></i>
-              </button>
-            </div>
-            <div className="space-y-4">
-              {recentUsers.map((user, index) => (
-                <div key={index} className="flex items-center gap-3 p-3 rounded-lg hover:bg-base-100 transition-colors">
-                  <div className="avatar">
-                    <div className="w-10 rounded-full">
-                      <img src={user.avatar} alt={user.name} crossOrigin="anonymous" />
+      {/* Top Sellers & Buyers Section */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8">
+        {/* Top Sellers */}
+        <div className="card bg-white shadow-xl border border-gray-200 rounded-lg">
+          <div className="card-body p-8">
+            <h2 className="text-2xl font-bold text-neutral mb-6">Top Sellers</h2>
+            {summary.top_sellers && summary.sellers.length > 0 ? (
+              <ul className="space-y-6">
+                {summary.top_sellers.map((seller, index) => (
+                  <li 
+                    key={seller.id} 
+                    className="flex justify-between items-center border-b border-gray-200 pb-4"
+                  >
+                    <div className="flex items-center space-x-4">
+                      {/* Avatar */}
+                      <img 
+                        src={seller.avatar || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"} 
+                        alt={`${seller.first_name} ${seller.last_name}`} 
+                        className="w-12 h-12 rounded-full object-cover"
+                      />
+                      <div>
+                        <p className="text-base font-medium">
+                          {index + 1}. {seller.first_name} {seller.last_name}
+                        </p>
+                        <p className="text-sm text-gray-500">
+                          Joined: {new Date(seller.date_joined).toLocaleDateString()}
+                        </p>
+                      </div>
                     </div>
-                  </div>
-                  <div className="flex-1">
-                    <p className="text-sm font-medium text-neutral">{user.first_name}</p>
-                    <p className="text-xs text-neutral/70">{user.email}</p>
-                  </div>
-                  <div className="text-right">
-                    <div className={`badge badge-sm ${user.role === 'Seller' ? 'badge-warning' : 'badge-info'}`}>
-                      {user.role}
-                    </div>
-                    <p className="text-xs text-neutral/70 mt-1">{user.time}</p>
-                  </div>
-                </div>
-              ))}
-            </div>
+                    <span className="badge badge-primary text-sm py-2 px-3">
+                      Services: {seller.service_count || 0}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-gray-500 text-sm">No sellers found.</p>
+            )}
           </div>
         </div>
 
-
+      {/* Top Buyers */}
+      <div className="card bg-white shadow-xl border border-gray-200 rounded-lg">
+        <div className="card-body p-8">
+          <h2 className="text-2xl font-bold text-neutral mb-6">Top Buyers</h2>
+          {summary.top_buyers && summary.buyers.length > 0 ? (
+            <ul className="space-y-6">
+              {summary.top_buyers.map((buyer, index) => (
+                <li 
+                  key={buyer.id} 
+                  className="flex justify-between items-center border-b border-gray-200 pb-4"
+                >
+                  <div className="flex items-center space-x-4">
+                    {/* Avatar */}
+                    <img 
+                      src={buyer.avatar || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"} 
+                      alt={`${buyer.first_name} ${buyer.last_name}`} 
+                      className="w-12 h-12 rounded-full object-cover"
+                    />
+                    <div>
+                      <p className="text-base font-medium">
+                        {index + 1}. {buyer.first_name} {buyer.last_name}
+                      </p>
+                      <p className="text-sm text-gray-500">
+                        Joined: {new Date(buyer.date_joined).toLocaleDateString()}
+                      </p>
+                    </div>
+                  </div>
+                  <span className="badge badge-secondary text-sm py-2 px-3">
+                    Orders: {buyer.order_count || 0}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p className="text-gray-500 text-sm">No buyers found.</p>
+          )}
+        </div>
       </div>
+    </div>
+  
+          
     </div>
   );
 };

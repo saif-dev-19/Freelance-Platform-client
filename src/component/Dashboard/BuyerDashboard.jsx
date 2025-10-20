@@ -1,92 +1,116 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 
 import useAuthContext from '../../hooks/useAuthContext';
 import QuickAction from './shared/QuickAction';
 import StatCard from './shared/StatCard';
 import WelcomeCard from './shared/WelcomeCard';
+import useFetchOrders from '../../hooks/useFetchOrders';
+import useFetchReviews from '../../hooks/useFetchReviews';
+import useFetchRecentOrders from '../../hooks/useFetchRecentOrders';
 
 const BuyerDashboard = () => {
   const { user } = useAuthContext();
   console.log(user.first_name);
+  const {orders,loading } = useFetchOrders();
+  const [spent, setSpent] = useState(0);
+  const{recentOrders} = useFetchRecentOrders();
+
+
+  useEffect(() => {
+    if (orders && orders.length > 0) {
+      const totalSpent = orders
+        .filter(order => order.status === "Completed") 
+        .reduce((total, order) => total + order.total_price, 0);
+
+      setSpent(totalSpent);
+    }
+  }, [orders]);
+
+  const {reviews} = useFetchReviews();
+  console.log("review",reviews);
+
+console.log("Total spent:", spent);
+  
+
+  
 
   const stats = [
-    { title: 'Orders', value: '23', icon: 'bi-cart-check', color: 'bg-primary'},
-    { title: 'Spent', value: '$1,847', icon: 'bi-currency-dollar', color: 'bg-success'},
-    { title: 'Reviews', value: '18', icon: 'bi-star', color: 'bg-warning' }
+    { title: 'Orders', value: loading ? "..." : orders.length, icon: 'bi-cart-check', color: 'bg-primary'},
+    { title: 'Spent', value: `$${spent}`, icon: 'bi-currency-dollar', color: 'bg-success'},
+    { title: 'Reviews', value: reviews.length, icon: 'bi-star', color: 'bg-warning' }
   ];
 
   const quickActions = [
-    { title: 'Browse Services', description: 'Discover new services to buy', icon: 'bi-search', color: 'bg-primary' },
-    { title: 'My Orders', description: 'Track your recent purchases', icon: 'bi-cart-check', color: 'bg-success' },
-    { title: 'Wishlist', description: 'View saved items', icon: 'bi-heart', color: 'bg-error' },
-    { title: 'Profile', description: 'Update account information', icon: 'bi-person-circle', color: 'bg-info' }
+    { to:"/services", title: 'Browse Services', description: 'Discover new services to buy', icon: 'bi-search', color: 'bg-primary' },
+    { to:"/dashboard/orders", title: 'My Orders', description: 'Track your recent purchases', icon: 'bi-cart-check', color: 'bg-success' },
+    { to:"/dashboard/profile", title: 'Profile', description: 'Update account information', icon: 'bi-person-circle', color: 'bg-info' }
   ];
 
-  const recentOrders = [
-  { 
-    id: '#ORD-101', 
-    service: 'Logo Design', 
-    seller: 'CreativeStudio', 
-    amount: '$89.99', 
-    status: 'Delivered', 
-    date: '2024-01-15',
-    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=60&h=60&fit=crop'
-  },
-  { 
-    id: '#ORD-102', 
-    service: 'Web Development', 
-    seller: 'CodeMasters', 
-    amount: '$199.99', 
-    status: 'Shipped', 
-    date: '2024-01-14',
-    image: 'https://images.unsplash.com/photo-1581090700227-4c4f50b8d01c?w=60&h=60&fit=crop'
-  },
-  { 
-    id: '#ORD-103', 
-    service: 'Content Writing', 
-    seller: 'WordSmiths', 
-    amount: '$45.99', 
-    status: 'Processing', 
-    date: '2024-01-13',
-    image: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=60&h=60&fit=crop'
-  }
-];
+//   const recentOrders = [
+//   { 
+//     id: '#ORD-101', 
+//     service: 'Logo Design', 
+//     seller: 'CreativeStudio', 
+//     amount: '$89.99', 
+//     status: 'Delivered', 
+//     date: '2024-01-15',
+//     image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=60&h=60&fit=crop'
+//   },
+//   { 
+//     id: '#ORD-102', 
+//     service: 'Web Development', 
+//     seller: 'CodeMasters', 
+//     amount: '$199.99', 
+//     status: 'Shipped', 
+//     date: '2024-01-14',
+//     image: 'https://images.unsplash.com/photo-1581090700227-4c4f50b8d01c?w=60&h=60&fit=crop'
+//   },
+//   { 
+//     id: '#ORD-103', 
+//     service: 'Content Writing', 
+//     seller: 'WordSmiths', 
+//     amount: '$45.99', 
+//     status: 'Processing', 
+//     date: '2024-01-13',
+//     image: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=60&h=60&fit=crop'
+//   }
+// ];
 
 
 
-  const recommendations = [
-  { 
-    name: 'Logo Design', 
-    price: '$29.99', 
-    rating: 4.5, 
-    reviews: 234,
-    image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=60&h=60&fit=crop'
-  },
-  { 
-    name: 'SEO Optimization', 
-    price: '$19.99', 
-    rating: 4.8, 
-    reviews: 156,
-    image: 'https://images.unsplash.com/photo-1504691342899-9ea0e96e82ed?w=60&h=60&fit=crop'
-  },
-  { 
-    name: 'Content Writing', 
-    price: '$12.99', 
-    rating: 4.3, 
-    reviews: 89,
-    image: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=60&h=60&fit=crop'
-  }
-];
+//   const recommendations = [
+//   { 
+//     name: 'Logo Design', 
+//     price: '$29.99', 
+//     rating: 4.5, 
+//     reviews: 234,
+//     image: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=60&h=60&fit=crop'
+//   },
+//   { 
+//     name: 'SEO Optimization', 
+//     price: '$19.99', 
+//     rating: 4.8, 
+//     reviews: 156,
+//     image: 'https://images.unsplash.com/photo-1504691342899-9ea0e96e82ed?w=60&h=60&fit=crop'
+//   },
+//   { 
+//     name: 'Content Writing', 
+//     price: '$12.99', 
+//     rating: 4.3, 
+//     reviews: 89,
+//     image: 'https://images.unsplash.com/photo-1524995997946-a1c2e315a42f?w=60&h=60&fit=crop'
+//   }
+// ];
 
 
-  const getStatusColor = (status) => {
-    switch (status) {
-      case 'Processing': return 'badge-warning';
-      case 'Shipped': return 'badge-info';
-      case 'Delivered': return 'badge-success';
-      default: return 'badge-neutral';
-    }
-  };
+  // const getStatusColor = (status) => {
+  //   switch (status) {
+  //     case 'Processing': return 'badge-warning';
+  //     case 'Shipped': return 'badge-info';
+  //     case 'Delivered': return 'badge-success';
+  //     default: return 'badge-neutral';
+  //   }
+  // };
 
   return (
     <div className="space-y-6">
@@ -110,7 +134,7 @@ const BuyerDashboard = () => {
           <h2 className="text-lg font-semibold text-neutral mb-4">Quick Actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {quickActions.map((action, index) => (
-              <QuickAction key={index} {...action} onClick={() => console.log(`Buyer action: ${action.title}`)} />
+              <QuickAction key={index} {...action} />
             ))}
           </div>
         </div>
@@ -119,7 +143,7 @@ const BuyerDashboard = () => {
       {/* Buyer Specific Content */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Orders */}
-        <div className="card bg-white shadow-sm border border-base-300">
+        {/* <div className="card bg-white shadow-sm border border-base-300">
           <div className="card-body p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-neutral">Recent Orders</h3>
@@ -132,7 +156,7 @@ const BuyerDashboard = () => {
                 <div key={index} className="flex items-center gap-3 p-3 rounded-lg hover:bg-base-100 transition-colors">
                   <div className="avatar">
                     <div className="w-12 rounded-lg">
-                      <img src={order.image} alt={order.service} crossOrigin="anonymous" />
+                      <img src={order?.image} alt={order.service} crossOrigin="anonymous" />
                     </div>
                   </div>
                   <div className="flex-1">
@@ -154,9 +178,9 @@ const BuyerDashboard = () => {
               ))}
             </div>
           </div>
-        </div>
+        </div> */}
         {/* Recommendations */}
-      <div className="card bg-white shadow-sm border border-base-300">
+      {/* <div className="card bg-white shadow-sm border border-base-300">
         <div className="card-body p-6">
           <div className="flex items-center justify-between mb-4">
             <h3 className="text-lg font-semibold text-neutral">Recommended for You</h3>
@@ -191,7 +215,7 @@ const BuyerDashboard = () => {
             ))}
           </div>
         </div>
-      </div>
+      </div>*/}
       </div>
 
       

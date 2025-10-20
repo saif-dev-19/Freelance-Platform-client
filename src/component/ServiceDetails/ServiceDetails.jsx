@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { FaStar } from 'react-icons/fa';
 import { Heart } from 'lucide-react';
-
 import ServiceImages from './ServiceImages';
 import { useNavigate, useParams } from 'react-router';
 import apiClient from '../../api_services/api-client';
@@ -30,7 +29,7 @@ const ServiceDetails = () =>{
     const handleOrderNow = () => {
       navigate(`/services/${serviceID}/order`);
   };
-
+  console.log("serv",service);
 
 
   return (
