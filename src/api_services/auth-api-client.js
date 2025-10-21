@@ -1,8 +1,8 @@
 import axios from "axios";
 
-// https://freelance-platform-delta.vercel.app/api
+// http://127.0.0.1:8000/api
 const authApiClient = axios.create({
-    baseURL : "http://127.0.0.1:8000/api",
+    baseURL : "https://freelance-platform-delta.vercel.app/api",
 })
 export default authApiClient
 
