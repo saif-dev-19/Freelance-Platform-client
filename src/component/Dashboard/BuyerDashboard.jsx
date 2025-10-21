@@ -6,14 +6,16 @@ import StatCard from './shared/StatCard';
 import WelcomeCard from './shared/WelcomeCard';
 import useFetchOrders from '../../hooks/useFetchOrders';
 import useFetchReviews from '../../hooks/useFetchReviews';
-import useFetchRecentOrders from '../../hooks/useFetchRecentOrders';
+import authApiClient from '../../api_services/auth-api-client';
+
 
 const BuyerDashboard = () => {
   const { user } = useAuthContext();
   console.log(user.first_name);
   const {orders,loading } = useFetchOrders();
   const [spent, setSpent] = useState(0);
-  const{recentOrders} = useFetchRecentOrders();
+  const [recentOrders, setOrders] = useState([]);
+
 
 
   useEffect(() => {
@@ -29,15 +31,15 @@ const BuyerDashboard = () => {
   const {reviews} = useFetchReviews();
   console.log("review",reviews);
 
-console.log("Total spent:", spent);
+  console.log("Total spent:", spent);
   
 
   
 
   const stats = [
     { title: 'Orders', value: loading ? "..." : orders.length, icon: 'bi-cart-check', color: 'bg-primary'},
-    { title: 'Spent', value: `$${spent}`, icon: 'bi-currency-dollar', color: 'bg-success'},
-    { title: 'Reviews', value: reviews.length, icon: 'bi-star', color: 'bg-warning' }
+    { title: 'Spent', value: loading ? "..." : `$${spent}`, icon: 'bi-currency-dollar', color: 'bg-success'},
+    { title: 'Reviews', value: loading ? "..." : reviews.length, icon: 'bi-star', color: 'bg-warning' }
   ];
 
   const quickActions = [
@@ -45,6 +47,23 @@ console.log("Total spent:", spent);
     { to:"/dashboard/orders", title: 'My Orders', description: 'Track your recent purchases', icon: 'bi-cart-check', color: 'bg-success' },
     { to:"/dashboard/profile", title: 'Profile', description: 'Update account information', icon: 'bi-person-circle', color: 'bg-info' }
   ];
+
+  
+
+  useEffect(() => {
+    authApiClient.get("/orders/") 
+      .then(res => {
+        
+        const sortedOrders = res.data.sort((a, b) => 
+          new Date(b.created_at) - new Date(a.created_at)
+        );
+
+        setOrders(sortedOrders.slice(0, 5));
+      })
+      .catch(err => console.error("Failed to fetch orders:", err));
+  }, []);
+
+  console.log("orders",recentOrders);
 
 //   const recentOrders = [
 //   { 
@@ -103,14 +122,14 @@ console.log("Total spent:", spent);
 // ];
 
 
-  // const getStatusColor = (status) => {
-  //   switch (status) {
-  //     case 'Processing': return 'badge-warning';
-  //     case 'Shipped': return 'badge-info';
-  //     case 'Delivered': return 'badge-success';
-  //     default: return 'badge-neutral';
-  //   }
-  // };
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'Processing': return 'badge-warning';
+      case 'Shipped': return 'badge-info';
+      case 'Delivered': return 'badge-success';
+      default: return 'badge-neutral';
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -143,7 +162,7 @@ console.log("Total spent:", spent);
       {/* Buyer Specific Content */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Orders */}
-        {/* <div className="card bg-white shadow-sm border border-base-300">
+        <div className="card bg-white shadow-sm border border-base-300">
           <div className="card-body p-6">
             <div className="flex items-center justify-between mb-4">
               <h3 className="text-lg font-semibold text-neutral">Recent Orders</h3>
@@ -161,15 +180,15 @@ console.log("Total spent:", spent);
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <p className="text-sm font-medium text-neutral">{order.service}</p>
+                      <p className="text-sm font-medium text-neutral">{order.service.title}</p>
                       <div className={`badge badge-xs ${getStatusColor(order.status)}`}>
                         {order.status}
                       </div>
                     </div>
-                    <p className="text-xs text-neutral/70">{order.seller} • {order.date}</p>
+                    <p className="text-xs text-neutral/70">{order.service.seller} • {order.created_at}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-medium text-neutral">{order.amount}</p>
+                    <p className="text-sm font-medium text-neutral">{order.total_price}</p>
                     <button className="btn btn-xs btn-ghost">
                       <i className="bi bi-arrow-right"></i>
                     </button>
@@ -178,7 +197,7 @@ console.log("Total spent:", spent);
               ))}
             </div>
           </div>
-        </div> */}
+        </div>
         {/* Recommendations */}
       {/* <div className="card bg-white shadow-sm border border-base-300">
         <div className="card-body p-6">

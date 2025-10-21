@@ -2,23 +2,6 @@
 import React from 'react';
 import { Users, Target, BookOpen } from 'lucide-react';
 
-const teamMembers = [
-  {
-    name: 'John Doe',
-    role: 'Founder & CEO',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    name: 'Jane Smith',
-    role: 'Lead Developer',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    name: 'Peter Jones',
-    role: 'Marketing Head',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-];
 
 const About = () => {
   return (
@@ -57,23 +40,66 @@ const About = () => {
       </div>
 
       {/* Meet the Team Section */}
-      <div className="text-center">
-        <h2 className="text-3xl font-bold mb-2">Meet the Team</h2>
-        <p className="text-muted-foreground mb-8">The passionate people behind our success.</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-          {teamMembers.map((member, index) => (
-            <div key={index} className="bg-base-100 p-6 rounded-2xl shadow-lg text-center transform hover:-translate-y-2 transition-transform duration-300">
-              <img
-                src={member.imageUrl}
-                alt={member.name}
-                className="w-32 h-32 rounded-full mx-auto mb-4 border-4 border-base-300"
-              />
-              <h3 className="text-xl font-semibold">{member.name}</h3>
-              <p className="text-primary">{member.role}</p>
+      <div className="max-w-5xl mx-auto text-center">
+  <h2 className="text-3xl font-bold mb-2">About Me</h2>
+  <p className="text-muted-foreground mb-8 max-w-3xl mx-auto">
+    I’m a passionate <span className="font-semibold text-neutral">Full Stack Developer </span>
+    with a strong focus on creating efficient, modern, and user-friendly web applications. 
+    I love turning ideas into reality through clean code and thoughtful design.
+  </p>
+
+  <div className="bg-base-100 p-8 rounded-2xl shadow-lg text-left space-y-6">
+    {/* Personal Info */}
+          <div>
+            <h3 className="text-xl font-semibold mb-3">Personal Information</h3>
+            <ul className="space-y-2 text-muted-foreground">
+              <li><strong>Name:</strong> Mahfuzur Rahman Saif</li>
+              <li><strong>Email:</strong> mahfujurrahmansaif@gmail.com</li>
+              <li><strong>Location:</strong> Dhaka, Bangladesh</li>
+              <li><strong>Role:</strong> Full Stack Developer</li>
+            </ul>
+          </div>
+
+          {/* Skills */}
+          <div>
+            <h3 className="text-xl font-semibold mb-3">Skills & Expertise</h3>
+            <div className="flex flex-wrap gap-2">
+              {[
+                "C",
+                'C++',
+                "Dart",
+                "React.js",  
+                "Tailwind CSS", 
+                "JavaScript (ES6)", 
+                "Python", 
+                "Django REST Framework",
+                "Flutter",
+                "PostgreSQL", 
+                "Git & GitHub"
+              ].map((skill, index) => (
+                <span
+                  key={index}
+                  className="badge badge-neutral badge-outline px-3 py-2 text-sm"
+                >
+                  {skill}
+                </span>
+              ))}
             </div>
-          ))}
+          </div>
+
+          {/* Experience */}
+          <div>
+            <h3 className="text-xl font-semibold mb-3">Experience & Goals</h3>
+            <p className="text-muted-foreground leading-relaxed">
+              I have hands-on experience in building full-stack web applications, developing RESTful APIs, 
+              and working with both frontend and backend technologies. 
+              My goal is to grow as a developer, work on impactful projects, 
+              and contribute to innovative tech solutions that make a difference.
+            </p>
+          </div>
         </div>
       </div>
+
     </div>
   );
 };
