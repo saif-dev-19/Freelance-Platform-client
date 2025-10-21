@@ -1,7 +1,7 @@
-
 import { useEffect, useState } from 'react';
 import CategoryCard from '../component/CategoryCard';
-import apiClient from '../api_services/api-client';
+import apiClient from '../api_services/api-Client';
+
 
 const Category = () => {
   const [loading, setLoading] = useState(false);

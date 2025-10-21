@@ -35,7 +35,6 @@ const AppRoutes = () => {
                 <Route path='services' element={<Service />} />
                 <Route path='about' element={<About />} />
                 <Route path='contact' element={<Contact />} />
-                <Route path='categories' element={<Category />} />
                 <Route path="login" element={<Login />} />
                 <Route path="register" element={<Register />} />
                 <Route path="activate/:uid/:token" element={<ActiveAccount />} />
@@ -55,6 +54,7 @@ const AppRoutes = () => {
                 <Route path='profile' element={<Profile />} />
                 <Route path='orders' element={<Orders />} />
                 <Route path='my-services' element={<MyServices />} />
+                <Route path='categories' element={<Category />} />
                 <Route path='payment/success' element={<PaymentSuccess />} />
                 <Route path='add-service' element={<AddService />} />
                 <Route path='add-category' element={<AddCategory />} />  

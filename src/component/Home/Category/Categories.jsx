@@ -3,6 +3,7 @@ import { Link, Navigate, useNavigate } from "react-router"
 import { useEffect, useState } from "react"
 import apiClient from "../../../api_services/api-client"
 
+
 const Categories = () => {
   const [categories,setCategories] = useState([])
 
@@ -23,7 +24,7 @@ const Categories = () => {
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-2xl font-bold text-gray-900">Choose your category</h1>
         <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-lg shadow transition duration-300"
-        onClick={() => nevigate('/categories')}>View more</button>
+        onClick={() => nevigate('/dashboard/categories')}>View more</button>
       </div>
 
       {/* Categories Grid */}

@@ -28,7 +28,7 @@ const buyerMenus = [
 const adminMenus = [
   { to: "/dashboard", icon: FiBarChart2, label: "Dashboard" },
   { to: "/dashboard/manage-user", icon: FiUsers, label: "Users" },
-  { to: "/categories", icon: FiTag, label: "Categories" },
+  { to: "/dashboard/categories", icon: FiTag, label: "Categories" },
   { to: "/dashboard/add-category", icon: FiPlusCircle, label: "Add Category" },
   { to: "/dashboard/orders", icon: FiClipboard, label: "Orders" },
 
