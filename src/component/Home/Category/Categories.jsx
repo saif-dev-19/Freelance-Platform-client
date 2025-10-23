@@ -1,5 +1,5 @@
 
-import { Link, Navigate, useNavigate } from "react-router"
+import { Link, Navigate } from "react-router"
 import { useEffect, useState } from "react"
 import apiClient from "../../../api_services/api-client"
 
@@ -12,7 +12,7 @@ const Categories = () => {
         .then(res => setCategories(res.data))
   })
 
-  const nevigate = useNavigate();
+  // const nevigate = useNavigate();
 
   const handleCategoryClick = (category) => {
     console.log("Selected category:", category.title)
@@ -23,12 +23,12 @@ const Categories = () => {
       {/* Header Section */}
       <div className="flex items-center justify-between mb-8">
         <h1 className="text-2xl font-bold text-gray-900">Choose your category</h1>
-        <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-lg shadow transition duration-300"
-        onClick={() => nevigate('/dashboard/categories')}>View more</button>
+        {/* <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-lg shadow transition duration-300"
+        onClick={() => nevigate('/dashboard/categories')}>View more</button> */}
       </div>
 
       {/* Categories Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-6 gap-2">
         {categories.map((category) => (
           <div
             key={category.id}

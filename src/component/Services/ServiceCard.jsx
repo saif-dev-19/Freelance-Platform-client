@@ -20,9 +20,9 @@ const ServiceCard = ({ service }) => {
   };
 
   return (
-    <div className="card w-70 h-[450px] bg-gray-200 text-black shadow-lg hover:shadow-xl transition-shadow duration-300">
+    <div className="card w-70 h-[450px] bg-gray-200 rounded-md text-black shadow-lg hover:shadow-xl transition-shadow duration-300">
       <Link to={`/services/${service.id}/`}>
-           <figure className="px-4 pt-8 ">
+           <figure className="px-2 pt-2">
               <img
                 src={service.images.length > 0 ? service.images[0].image : default_img}
                 alt={service.title}
@@ -57,24 +57,27 @@ const ServiceCard = ({ service }) => {
           <span className="text-xs text-base-content/50">({service.reviews})</span>
         </div>
 
-        <div className="card-actions justify-between items-center">
-          <div className="text-right flex  justify-between gap-2">
+        <div className="card-actions flex gap-2 justify-between">
+          <div className="text-right">
             <div className="flex">
                 <span className="text-lg font-bold text-neutral">${service.price}</span>
             </div>
             
 
             {/* Seller buttons */}
-            <div className="flex gap-2">
+            <div className="flex gap-2  space-x-1 mt-2">
               {user?.role === "Seller" && (
                 <>
+                  <Link to={`/services/${service.id}`} className="btn btn-sm btn-outline btn-neutral gap-1">
+                    View Details
+                  </Link>
                   <Link
                   to={`/dashboard/services/edit/${service.id}`}
-                  className="btn btn-sm btn-primary flex items-center gap-1"
-                >
+                  className="btn btn-sm btn-outline btn-neutral gap-1"
+                  >
                   Edit
                 </Link>
-                  <button onClick={handleDelete} className="btn btn-sm btn-error">
+                  <button onClick={handleDelete} className="btn btn-sm btn-outline btn-neutral gap-1">
                     Delete
                   </button>
                 </>
@@ -83,11 +86,23 @@ const ServiceCard = ({ service }) => {
           </div>
 
           {/* Buyer order button */}
-          {user?.role === "Buyer" && (
-            <Link to={`/services/${service.id}`} className="btn btn-sm btn-outline btn-neutral gap-1">
-              Order Now
-            </Link>
-          )}
+          <div className="flex gap-2 justify-between">
+            <div>
+                {user?.role === "Buyer" && (
+                  <Link to={`/services/${service.id}`} className="btn btn-sm btn-outline btn-neutral gap-1">
+                    Order Now
+                  </Link>
+                )}
+              </div>
+            
+              <div>
+                {user?.role !== "Seller" && (
+                  <Link to={`/services/${service.id}`} className="btn btn-sm btn-outline btn-neutral gap-1">
+                    View Details
+                  </Link>
+                )}
+              </div>
+          </div>
         </div>
       </div>
     </div>

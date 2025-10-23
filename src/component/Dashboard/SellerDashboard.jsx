@@ -15,8 +15,9 @@ const SellerDashboard = () => {
   const [totalearnings,setTotalEarninngs] = useState(0)
   const [loading,setLoading] = useState(false)
   const{orders} = useFetchOrders();
-
   const{recentOrders} = useFetchRecentOrders();
+
+  console.log("service",services);
 
   useEffect(() => {
     setLoading(true)

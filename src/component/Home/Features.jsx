@@ -33,7 +33,7 @@ const Features = () => {
                     <div key={index} className='flex flex-col items-center text-center '>
                         <img className='max-w-md drop-shadow-lg size-30' src={feature.image} alt="" />
                         <h3 className='text-xl font-bold mt-2'>{feature.title}</h3>
-                        <p className='text-gray-400 text-sm'>{feature.description}</p>
+                        <p className='text-gray-700 text-sm'>{feature.description}</p>
                     </div>
                 ))}
             </div>

@@ -17,11 +17,12 @@ const MyServices= () => {
     const [selectedCategory,setSelectedCategory] = useState("")
     const [searchQuery,setSearchQuery] =useState("")
     const [sortOrder,setSortOrder] = useState("")
+
     
-    const {services} = useFetchSellerService();
-    
-    const {loading,totalpages} = useFetchServices(currentpage,selectedCategory,searchQuery,sortOrder);
+    const {services,loading,totalpages} = useFetchSellerService(currentpage,selectedCategory,searchQuery,sortOrder);
     const categories = useFetchCategories();
+
+    console.log("service",services);
 
 
     // const fetchproducts =()=>{

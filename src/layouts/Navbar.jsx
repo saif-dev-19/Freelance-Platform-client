@@ -86,7 +86,14 @@ const Navbar = () => {
               tabIndex={0}
               className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52"
             >
-              <li><Link to="/dashboard">Dashboard</Link></li>
+              <li><Link
+                    to={user ? ("/dashboard") : ("/")}
+                    className="font-medium text-gray-600 hover:text-green-700 transition"
+                  >
+                    {user && ("Dashboard")}
+                    {!user && ("Home")}
+                </Link>
+              </li>
               <li><Link to="/services">Services</Link></li>
               <li><Link to="/about">About</Link></li>
               <li><Link to="/contact">Contact</Link></li>
