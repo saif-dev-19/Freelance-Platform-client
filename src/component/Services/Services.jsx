@@ -41,8 +41,14 @@ const Services= () => {
     
   return (
     
-    <div className="min-h-screen bg-white">
-        <div>
+    <div className="min-h-screen bg-[#F8FAFC]">
+        <div className="pt-12 pb-8">
+            <div className="max-w-7xl mx-auto px-8 mb-10">
+                <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-[#6D28D9] via-[#3B82F6] to-[#0EA5E9] bg-clip-text text-transparent mb-3">
+                    Explore All Services
+                </h1>
+                <p className="text-gray-600 text-lg">Find the perfect service for your needs</p>
+            </div>
             <FilterSection 
                 categories={categories} 
                 selectedCategory={selectedCategory}
@@ -54,19 +60,32 @@ const Services= () => {
             />
         </div>
         {loading && (
-                    <div className='flex justify-center items-center py-10'>
-                        <span className="loading loading-spinner text-neutral loading-xl"></span>
-                    </div>
-        )}
-
-        {!loading &&(
-            <div className="grid grid-cols-1 px-8 py-8 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                    {services.map((service) => (
-                        <ServiceItem service={service} />
-                    ))}
+            <div className='flex justify-center items-center py-20'>
+                <div className="relative">
+                    <div className="w-16 h-16 border-4 border-[#6D28D9]/20 border-t-[#6D28D9] rounded-full animate-spin"></div>
+                </div>
             </div>
         )}
+
+        {!loading && services.length > 0 && (
+            <div className="px-8 py-8 max-w-7xl mx-auto">
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+                    {services.map((service) => (
+                        <ServiceItem key={service.id} service={service} />
+                    ))}
+                </div>
+            </div>
+        )}
+        
+        {!loading && services.length === 0 && (
+            <div className="text-center py-20">
+                <p className="text-gray-500 text-lg">No services found matching your criteria</p>
+            </div>
+        )}
+        
+        <div className="pb-12">
             <Pagination totalpages={totalpages} currentpage={currentpage} handlePageChange={setCurrnetpage}/>
+        </div>
     </div>
 
     

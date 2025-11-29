@@ -22,32 +22,33 @@ const HeroCarousel =() => {
 
     const slides = [
         {
-            title : "MOBILE FRIENDLY",
-            subtitle : "Responsive design supports all smart phones and tablets!",
-            image1 : cup,
-            image2 : iphone,
-            bg_color: "#c6534a",
-            title_color : "white",
-            sub_color : "black",
-
-        },
-        {
-            title : "VITUALBAZAR AGENCY & PORTFOLIO WP THEME",
-            subtitle : "You can discover many awesome features and the ease of using this theme",
+            title : "Find Top Talent Worldwide",
+            subtitle : "Connect with skilled freelancers ready to bring your projects to life",
             image1 : laptop,
-            bg_color: "#f7c239",
-            title_color : "White",
-            sub_color : "gray",
+            image2 : cup,
+            bg_color: "#6D28D9",
+            title_color : "white",
+            sub_color : "#E9D5FF",
 
         },
         {
-            title : "UNLIMITED COLORS",
-            subtitle : "Clean and Powerful Easy to Customize.",
-            image1 : ipad,
-            image2: cup,
-            bg_color: "#afc9c0",
-            title_color : "green",
-            sub_color : "black",
+            title : "Premium Services at Your Fingertips",
+            subtitle : "Browse thousands of professional services from verified experts",
+            image1 : iphone,
+            image2: ipad,
+            bg_color: "#3B82F6",
+            title_color : "white",
+            sub_color : "#DBEAFE",
+
+        },
+        {
+            title : "Build Your Dream Project Today",
+            subtitle : "Quality work delivered on time, every time. Start your journey now.",
+            image1 : cup,
+            image2: laptop,
+            bg_color: "#0EA5E9",
+            title_color : "white",
+            sub_color : "#E0F2FE",
 
         },
     ]

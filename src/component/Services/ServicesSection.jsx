@@ -26,48 +26,61 @@ const ServicesSection = () => {
       
 
   return (
-    <div className="min-h-screen bg-white">
-      <div className="container mx-auto px-4 py-8">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-2xl font-bold text-black">Browse popular Services</h2>
-          <Link to="/services" className="link link-primary text-sm hover:link-hover">
-            Discover More
+    <div className="py-24 bg-[#F8FAFC]">
+      <div className="container mx-auto px-8 max-w-7xl">
+        <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-4">
+          <div>
+            <h2 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-[#6D28D9] via-[#3B82F6] to-[#0EA5E9] bg-clip-text text-transparent">
+              Popular Services
+            </h2>
+            <p className="text-gray-600 text-lg mt-3">Discover top-rated services from talented freelancers</p>
+          </div>
+          <Link 
+            to="/services" 
+            className="group flex items-center gap-2 bg-gradient-to-r from-[#6D28D9] to-[#3B82F6] text-white px-8 py-4 rounded-2xl font-bold hover:shadow-[0_8px_30px_rgba(109,40,217,0.3)] transition-all duration-300 hover:scale-105"
+          >
+            View All Services
+            <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M9 5l7 7-7 7" />
+            </svg>
           </Link>
         </div>
 
         {loading && (
-                    <div className='flex justify-center items-center py-10'>
-                        <span className="loading loading-dots text-neutral loading-xl"></span>
-                    </div>
-                )}
+          <div className='flex justify-center items-center py-20'>
+            <div className="relative">
+              <div className="w-16 h-16 border-4 border-[#6D28D9]/20 border-t-[#6D28D9] rounded-full animate-spin"></div>
+            </div>
+          </div>
+        )}
         
         {!loading  && services.length >0 && (
-          <div className='flex justify-center items-center'>
-                        <Swiper
-                        modules = {[Navigation]}
-                        spaceBetween = {1}
-                        slidesPerView = {1}
-                        breakpoints = {{
-                            640: {slidesPerView: 2},
-                            1024 : {slidesPerView: 3},
-                        }}
-                        navigation
-                        className  = "mt-4 px-4 container "
-                        >
-                        {services.map((service) => (
-                            <SwiperSlide key={service.id} className='flex justify-center'>
-                                <ServiceItem service={service} />
-                            </SwiperSlide>
-                        ))}
-                        </Swiper>
-                    </div>
-          
+          <div className='w-full'>
+            <Swiper
+              modules = {[Navigation]}
+              spaceBetween = {32}
+              slidesPerView = {1}
+              breakpoints = {{
+                640: {slidesPerView: 2, spaceBetween: 24},
+                1024 : {slidesPerView: 3, spaceBetween: 32},
+              }}
+              navigation
+              className = "service-swiper !pb-12"
+            >
+              {services.map((service) => (
+                <SwiperSlide key={service.id} className='h-auto'>
+                  <ServiceItem service={service} />
+                </SwiperSlide>
+              ))}
+            </Swiper>
+          </div>
         )}
 
         {!loading && services.length===0 && (
-          <span>No items here</span>
+          <div className="text-center py-20">
+            <p className="text-gray-500 text-lg">No services available at the moment</p>
+          </div>
         )}
-        
       </div>
     </div>
   )

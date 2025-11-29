@@ -175,7 +175,7 @@ const BuyerDashboard = () => {
                 <div key={index} className="flex items-center gap-3 p-3 rounded-lg hover:bg-base-100 transition-colors">
                   <div className="avatar">
                     <div className="w-12 rounded-lg">
-                      <img src={order?.image} alt={order.service} crossOrigin="anonymous" />
+                      <img src={order?.service.images[0]} alt={order.service.title} crossOrigin="anonymous" />
                     </div>
                   </div>
                   <div className="flex-1">

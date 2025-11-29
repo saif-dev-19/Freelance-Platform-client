@@ -19,34 +19,39 @@ const Categories = () => {
   }
 
   return (
-    <div className="w-full px-8 py-4  mx-auto bg-white">
+    <div className="w-full px-8 py-20 mx-auto bg-white">
       {/* Header Section */}
-      <div className="flex items-center justify-between mb-8">
-        <h1 className="text-2xl font-bold text-gray-900">Choose your category</h1>
-        {/* <button className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-md text-lg shadow transition duration-300"
-        onClick={() => nevigate('/dashboard/categories')}>View more</button> */}
+      <div className="flex items-center justify-between mb-16 max-w-7xl mx-auto">
+        <div>
+          <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-[#6D28D9] via-[#3B82F6] to-[#0EA5E9] bg-clip-text text-transparent">
+            Browse by Category
+          </h1>
+          <p className="text-gray-600 text-lg mt-3">Explore services across different categories</p>
+        </div>
       </div>
 
       {/* Categories Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-6 gap-2">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5 max-w-7xl mx-auto">
         {categories.map((category) => (
           <div
             key={category.id}
             onClick={() => handleCategoryClick(category)}
-            className="group bg-white rounded-lg border border-gray-200 p-6 cursor-pointer transition-all duration-200 hover:shadow-md hover:border-gray-400 hover:-translate-y-0.5"
-            style={{
-              boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
-            }}
+            className="group relative bg-white rounded-2xl border border-gray-200/50 p-6 cursor-pointer transition-all duration-500 hover:shadow-[0_8px_30px_rgba(109,40,217,0.15)] hover:border-[#6D28D9]/30 hover:-translate-y-2 overflow-hidden"
           >
+            {/* Gradient Overlay on Hover */}
+            <div className="absolute inset-0 bg-gradient-to-br from-[#6D28D9]/0 to-[#3B82F6]/0 group-hover:from-[#6D28D9]/5 group-hover:to-[#3B82F6]/5 transition-all duration-500"></div>
+            
             {/* Icon Container */}
-            {/* <div className="flex justify-center mb-4">
-              <div className="w-12 h-12 bg-gray-100 rounded-lg flex items-center justify-center group-hover:bg-gray-200 transition-colors">
-                <span className="text-xl">{category.description}</span>
+            <div className="relative flex justify-center mb-4">
+              <div className="w-16 h-16 bg-gradient-to-br from-[#6D28D9]/10 to-[#3B82F6]/10 rounded-2xl flex items-center justify-center group-hover:from-[#6D28D9]/20 group-hover:to-[#3B82F6]/20 transition-all duration-500 group-hover:scale-110 group-hover:rotate-3">
+                <span className="text-3xl">📁</span>
               </div>
-            </div> */}
+            </div>
 
             {/* Category Title */}
-            <h3 className="text-center text-sm font-medium text-gray-900 leading-tight">{category.name}</h3>
+            <h3 className="relative text-center text-sm font-bold text-[#0F172A] leading-tight group-hover:text-[#6D28D9] transition-colors duration-300">
+              {category.name}
+            </h3>
           </div>
         ))}
       </div>
