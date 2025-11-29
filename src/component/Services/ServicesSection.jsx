@@ -30,7 +30,7 @@ const ServicesSection = () => {
       <div className="container mx-auto px-8 max-w-7xl">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-12 gap-4">
           <div>
-            <h2 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-[#6D28D9] via-[#3B82F6] to-[#0EA5E9] bg-clip-text text-transparent">
+            <h2 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-[#6D28D9] via-[#3B82F6] to-[#0EA5E9] bg-clip-text ">
               Popular Services
             </h2>
             <p className="text-gray-600 text-lg mt-3">Discover top-rated services from talented freelancers</p>

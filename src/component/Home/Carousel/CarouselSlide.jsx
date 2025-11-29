@@ -1,4 +1,5 @@
 import { motion } from "framer-motion";
+import { Link } from "react-router";
 
 const CarouselSlide = ({
   title,
@@ -67,20 +68,24 @@ const CarouselSlide = ({
             transition={{ duration: 0.8, delay: 0.6 }}
             className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-2"
           >
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-white text-[#0F172A] px-8 py-4 text-base font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300"
-            >
-              Explore Services
-            </motion.button>
-            <motion.button 
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-white/10 backdrop-blur-md border-2 border-white/30 text-white px-8 py-4 text-base font-bold rounded-2xl hover:bg-white/20 transition-all duration-300"
-            >
-              Learn More
-            </motion.button>
+            <Link to="/services">
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-white text-[#0F172A] px-8 py-4 text-base font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300"
+              >
+                Explore Services
+              </motion.button>
+            </Link>
+            <Link to="/about">
+              <motion.button 
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="bg-white/10 backdrop-blur-md border-2 border-white/30 text-white px-8 py-4 text-base font-bold rounded-2xl hover:bg-white/20 transition-all duration-300"
+              >
+                Learn More
+              </motion.button>
+            </Link>
           </motion.div>
         </motion.div>
 

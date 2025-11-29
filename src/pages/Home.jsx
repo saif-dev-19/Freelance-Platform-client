@@ -22,8 +22,8 @@ const Home = () => {
             {/* Top Sellers & Buyers Section */}
             <div className="px-8 py-20 bg-gradient-to-br from-[#F8FAFC] via-white to-[#F1F5F9]">
                 <div className="max-w-7xl mx-auto">
-                    <div className="text-center mb-16">
-                        <h2 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-[#6D28D9] via-[#3B82F6] to-[#0EA5E9] bg-clip-text text-transparent mb-4">
+                    <div className="text-center mb-14">
+                        <h2 className="text-3xl md:text-5xl font-extrabold bg-gradient-to-r from-[#6D28D9] via-[#3B82F6] to-[#0EA5E9] bg-clip-text mb-4">
                             Top Community Members
                         </h2>
                         <p className="text-gray-600 text-lg">Meet our most active sellers and buyers</p>

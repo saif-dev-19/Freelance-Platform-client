@@ -23,7 +23,7 @@ const Categories = () => {
       {/* Header Section */}
       <div className="flex items-center justify-between mb-16 max-w-7xl mx-auto">
         <div>
-          <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-[#6D28D9] via-[#3B82F6] to-[#0EA5E9] bg-clip-text text-transparent">
+          <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-[#6D28D9] via-[#3B82F6] to-[#0EA5E9] bg-clip-text">
             Browse by Category
           </h1>
           <p className="text-gray-600 text-lg mt-3">Explore services across different categories</p>

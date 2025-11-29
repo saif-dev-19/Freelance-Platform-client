@@ -53,7 +53,7 @@ const Features = () => {
                 transition={{ duration: 0.6 }}
                 className="text-center mb-16"
             >
-                <h1 className="font-extrabold text-4xl md:text-5xl bg-gradient-to-r from-[#6D28D9] via-[#3B82F6] to-[#0EA5E9] bg-clip-text text-transparent mb-4">
+                <h1 className="font-extrabold text-4xl md:text-5xl bg-gradient-to-r from-[#6D28D9] via-[#3B82F6] to-[#0EA5E9] bg-clip-text mb-4">
                     Why Choose Us
                 </h1>
                 <p className="text-gray-600 text-lg max-w-2xl mx-auto">
