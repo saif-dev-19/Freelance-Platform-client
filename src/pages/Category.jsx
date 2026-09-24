@@ -10,7 +10,7 @@ const Category = () => {
   
     useEffect(() =>{
         setLoading(true)
-      apiClient.get("/categories")
+      apiClient.get("/categories/")
           .then(res => setCategories(res.data))
           .catch((error) =>{
             console.log(error);

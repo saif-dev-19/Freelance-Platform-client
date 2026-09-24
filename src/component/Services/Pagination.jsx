@@ -1,4 +1,6 @@
 const Pagination = ({totalpages,currentpage,handlePageChange}) => {
+    if (totalpages <= 0) return null;
+
     return (
         <div className='flex justify-center items-center gap-3 py-8'>
             {/* Previous Button */}
@@ -34,7 +36,7 @@ const Pagination = ({totalpages,currentpage,handlePageChange}) => {
             {/* Next Button */}
             <button
                 onClick={() => handlePageChange(Math.min(totalpages, currentpage + 1))}
-                disabled={currentpage === totalpages}
+                disabled={currentpage >= totalpages}
                 className={`px-6 py-3 rounded-2xl font-bold transition-all duration-300 ${
                     currentpage === totalpages
                         ? 'bg-gray-200 text-gray-400 cursor-not-allowed'

@@ -11,6 +11,9 @@ const ReviewSection = () => {
   const { serviceID } = useParams();
   const [reviews, setReviews] = useState([]);
   const [userCanReview, setUserCanReview] = useState(false);
+  const [orderStatus, setOrderStatus] = useState(null);
+  const [permissionLoading, setPermissionLoading] = useState(true);
+  const [permissionError, setPermissionError] = useState("");
   const [isLoading, setLoading] = useState(true);
   const [editReview, setEditReview] = useState({ rating: 0, comment: "" });
   const [editingId, setEditingId] = useState(null);
@@ -40,12 +43,18 @@ const ReviewSection = () => {
   };
 
   const checkUserPermission = async () => {
+    setPermissionLoading(true);
+    setPermissionError("");
     try {
       const res = await authApiClient.get(`/orders/has-ordered/${serviceID}/`);
-      console.log("order perm",res.data.has_orderes);
-      setUserCanReview(res.data.has_orderes);
+      setUserCanReview(res.data.has_ordered ?? res.data.has_orderes ?? false);
+      setOrderStatus(res.data.order_status ?? null);
     } catch (error) {
-      console.log(error);
+      console.error("Could not check review eligibility", error);
+      setUserCanReview(false);
+      setPermissionError("Could not check whether this order is eligible for a review. Please sign in and reload.");
+    } finally {
+      setPermissionLoading(false);
     }
   };
 
@@ -72,9 +81,15 @@ const ReviewSection = () => {
   };
 
   useEffect(() => {
-    checkUserPermission();
+    if (!serviceID) return;
     fetchReviews();
-  }, []);
+    if (user?.role === "Buyer") {
+      checkUserPermission();
+    } else {
+      setUserCanReview(false);
+      setPermissionLoading(false);
+    }
+  }, [serviceID, user?.role]);
   return (
     <div className="space-y-8 mt-10 max-w-5xl mx-auto px-4">
       <div className="flex items-center justify-between">
@@ -91,6 +106,14 @@ const ReviewSection = () => {
             <ReviewForm onSubmit={onSubmit} />
           </div>
         </div>
+      )}
+
+      {user?.role === "Buyer" && !permissionLoading && !userCanReview && (
+        <p className="text-sm text-base-content/70">
+          {permissionError || (orderStatus
+            ? `You can review after the order is completed. Current order status: ${orderStatus === "In_progress" ? "In Progress" : orderStatus}.`
+            : "You can review this service after placing and completing an order.")}
+        </p>
       )}
 
       <div className="divider"></div>

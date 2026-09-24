@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import apiClient from "../api_services/api-client";
 
 
@@ -13,9 +13,16 @@ const useAuth = () =>{
     }
 
     const [authTokens,setAuthTokens] = useState(getToken());
+    const [authLoading, setAuthLoading] = useState(Boolean(getToken()));
+    const profileRequestId = useRef(0);
 
     useEffect(() => {
-        if(authTokens) fetchUserProfile();
+        if (authTokens) {
+            fetchUserProfile(authTokens);
+        } else {
+            setUser(null);
+            setAuthLoading(false);
+        }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     },[authTokens]);
 
@@ -54,18 +61,31 @@ const useAuth = () =>{
 
 
     //Fetch Users
-    const fetchUserProfile = async () =>{
+    const fetchUserProfile = async (tokens = authTokens) =>{
+        const requestId = ++profileRequestId.current;
+        if (!tokens?.access) {
+            setUser(null);
+            setAuthLoading(false);
+            return null;
+        }
+        setAuthLoading(true);
         setErrorMsg("");
         try{
             const response = await apiClient.get("/auth/users/me/",{
-                headers : {Authorization: `JWT ${authTokens?.access}`},
+                headers : {Authorization: `JWT ${tokens.access}`},
             });
-            console.log(response.data)
-            setUser(response.data);
+            if (requestId === profileRequestId.current) setUser(response.data);
+            return response.data;
         }
         catch(error){
-            setErrorMsg(error.response.data?.detail);
-            console.log("Login error",error.response?.data);
+            if (requestId === profileRequestId.current) {
+                setUser(null);
+                setErrorMsg(error.response?.data?.detail || "Could not load your account.");
+                console.log("Profile fetch error",error.response?.data || error);
+            }
+            return null;
+        } finally {
+            if (requestId === profileRequestId.current) setAuthLoading(false);
         }
     }
 
@@ -77,7 +97,7 @@ const useAuth = () =>{
             setAuthTokens(response.data);
             localStorage.setItem("authTokens",JSON.stringify(response.data));
             
-            await fetchUserProfile();
+            await fetchUserProfile(response.data);
             return { success: true}
         }catch(error){
             setErrorMsg(error.response.data?.detail);
@@ -100,14 +120,16 @@ const useAuth = () =>{
 
     //Logout user
     const logoutUser = async () =>{
+        profileRequestId.current += 1;
         setAuthTokens(null);
         setUser(null);
+        setAuthLoading(false);
         localStorage.removeItem("authTokens")
     }
 
     const clearError = () => setErrorMsg(null);
 
-    return {user,errorMsg,loginUser, registerUser, logoutUser,fetchUserProfile,updateProfile,clearError};
+    return {user,errorMsg,authLoading,loginUser, registerUser, logoutUser,fetchUserProfile,updateProfile,clearError};
 }
 
 export default useAuth;

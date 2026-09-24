@@ -67,6 +67,33 @@
   padding-bottom: 3rem !important;
 }
 
+.service-nav-button {
+  display: inline-flex;
+  width: 44px;
+  height: 44px;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  border-radius: 9999px;
+  background: rgba(255, 255, 255, 0.88);
+  color: #0F172A;
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.12);
+  transition: all 0.25s ease;
+}
+
+.service-nav-button:hover {
+  background: #F97316;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(249, 115, 22, 0.25);
+}
+
+.service-nav-button.swiper-button-disabled {
+  cursor: not-allowed;
+  opacity: 0.35;
+  pointer-events: none;
+}
+
 .service-swiper .swiper-slide {
   height: auto;
   display: flex;
@@ -74,18 +101,21 @@
 
 .service-swiper .swiper-button-next,
 .service-swiper .swiper-button-prev {
-  background: linear-gradient(135deg, #6D28D9 0%, #3B82F6 100%);
-  width: 52px;
-  height: 52px;
+  background: rgba(15, 23, 42, 0.92);
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
-  box-shadow: 0 4px 20px rgba(109, 40, 217, 0.3);
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.18);
+  backdrop-filter: blur(10px);
   transition: all 0.3s ease;
 }
 
 .service-swiper .swiper-button-next:hover,
 .service-swiper .swiper-button-prev:hover {
   transform: scale(1.1);
-  box-shadow: 0 8px 30px rgba(109, 40, 217, 0.4);
+  background: #F97316;
+  box-shadow: 0 12px 30px rgba(15, 23, 42, 0.24);
 }
 
 .service-swiper .swiper-button-next::after,
@@ -95,21 +125,33 @@
   font-weight: bold;
 }
 
+.service-swiper .swiper-button-next:hover::after,
+.service-swiper .swiper-button-prev:hover::after {
+  color: white;
+}
+
+.service-swiper .swiper-button-disabled,
+.mySwiper .swiper-button-disabled,
+.detail-swiper .swiper-button-disabled {
+  opacity: 0.35;
+  pointer-events: none;
+}
+
 .mySwiper .swiper-button-next,
 .mySwiper .swiper-button-prev {
-  background: rgba(255, 255, 255, 0.95);
+  background: rgba(15, 23, 42, 0.86);
   backdrop-filter: blur(10px);
-  width: 56px;
-  height: 56px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
   transition: all 0.3s ease;
-  border: 2px solid rgba(255, 255, 255, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.32);
 }
 
 .mySwiper .swiper-button-next:hover,
 .mySwiper .swiper-button-prev:hover {
-  background: rgba(255, 255, 255, 1);
+  background: #F97316;
   transform: scale(1.1);
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
 }
@@ -117,7 +159,7 @@
 .mySwiper .swiper-button-next::after,
 .mySwiper .swiper-button-prev::after {
   font-size: 24px;
-  color: #6D28D9;
+  color: white;
   font-weight: bold;
 }
 
@@ -136,6 +178,31 @@
   border-radius: 8px;
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.6);
   border: 2px solid rgba(255, 255, 255, 0.5);
+}
+
+.detail-swiper .swiper-button-next,
+.detail-swiper .swiper-button-prev {
+  width: 44px;
+  height: 44px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.78);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.18);
+  backdrop-filter: blur(8px);
+  transition: all 0.3s ease;
+}
+
+.detail-swiper .swiper-button-next:hover,
+.detail-swiper .swiper-button-prev:hover {
+  background: #F97316;
+  transform: scale(1.08);
+}
+
+.detail-swiper .swiper-button-next::after,
+.detail-swiper .swiper-button-prev::after {
+  color: white;
+  font-size: 18px;
+  font-weight: 700;
 }
 
 /* :root {

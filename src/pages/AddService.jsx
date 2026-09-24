@@ -1,5 +1,6 @@
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { useNavigate } from "react-router";
 import authApiClient from "../api_services/auth-api-client";
 import useFetchCategories from "../hooks/useFetchCategories";
 
@@ -12,6 +13,8 @@ const AddService = () => {
   const [images, setImages] = useState([]);
   const [imgUploading, setImgUploading] = useState(false);
   const [previewImages, setPreviewImages] = useState([]);
+  const [uploadedImageCount, setUploadedImageCount] = useState(0);
+  const navigate = useNavigate();
 
   const categories = useFetchCategories();
 
@@ -36,8 +39,7 @@ const AddService = () => {
 
   const handleImageChange = (e) =>{
     const files = Array.from(e.target.files);
-    console.log(files);
-    setImages(files)
+    setImages(files);
     setPreviewImages(files.map((file) => URL.createObjectURL(file)));
 
   }
@@ -60,8 +62,10 @@ const AddService = () => {
 
         await authApiClient.post(`/services/${serviceID}/images/`, formData);
       }
-      setSuccessMsg("Images uploaded successfully!");
+      setUploadedImageCount((count) => count + images.length);
+      setSuccessMsg(`${images.length} image${images.length === 1 ? "" : "s"} uploaded successfully. Your service is ready.`);
       setImages([]);
+      setPreviewImages([]);
     } catch (error) {
       setErrorMsg("Failed to upload images.");
       console.log("image error",error);
@@ -177,9 +181,9 @@ const AddService = () => {
                 Category
               </label>
               <select
-                {...register("category", { required: "Category is required" })}
+                {...register("category_id", { required: "Category is required" })}
                 className={`select select-bordered w-full text-black ${
-                  errors.category ? "border-red-500" : ""
+                  errors.category_id ? "border-red-500" : ""
                 }`}
               >
                 <option value="">Select a category</option>
@@ -189,9 +193,9 @@ const AddService = () => {
                   </option>
                 ))}
               </select>
-              {errors.category && (
+              {errors.category_id && (
                 <p className="text-red-500 text-sm mt-1">
-                  {errors.category.message}
+                  {errors.category_id.message}
                 </p>
               )}
             </div>
@@ -206,8 +210,17 @@ const AddService = () => {
             </button>
           </form>
         ) : (
-          /* If productID → show image upload */
+          /* Keep the user here while images are uploaded. */
           <div className="space-y-5">
+            <div className="rounded-lg border border-blue-200 bg-blue-50 p-4 text-sm text-blue-900">
+              <p className="font-semibold">Service created successfully</p>
+              <p className="mt-1">Add one or more images to finish your service.</p>
+              {uploadedImageCount > 0 && (
+                <p className="mt-2 font-semibold text-green-700">
+                  {uploadedImageCount} image{uploadedImageCount === 1 ? "" : "s"} uploaded
+                </p>
+              )}
+            </div>
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
                 Upload Images
@@ -233,6 +246,27 @@ const AddService = () => {
             >
               {imgUploading ? "Uploading..." : "Upload Images"}
             </button>
+
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <button
+                type="button"
+                onClick={() => navigate("/dashboard/my-services")}
+                className="btn btn-outline flex-1"
+              >
+                View My Services
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setServiceID(null);
+                  setUploadedImageCount(0);
+                  setSuccessMsg("");
+                }}
+                className="btn btn-ghost flex-1"
+              >
+                Create Another Service
+              </button>
+            </div>
           </div>
         )}
       </div>

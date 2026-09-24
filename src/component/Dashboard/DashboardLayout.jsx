@@ -12,7 +12,7 @@ const DashboardLayout = () => {
   };
 
   return (
-    <div className="drawer lg:drawer-open">
+    <div className="drawer min-h-screen bg-[#EEF3F8] lg:drawer-open">
       {/* Mobile drawer checkbox */}
       <input
         id="drawer-toggle"
@@ -24,12 +24,12 @@ const DashboardLayout = () => {
 
       {/* Page content */}
       
-      <div className="drawer-content flex flex-col">
+      <div className="drawer-content flex min-w-0 flex-col">
         {/* Navbar */}
         <Navbar sidebarOpen={sidebarOpen} toggleSidebar={toggleSidebar} />
 
         {/* Main content */}
-        <main className="p-6">
+        <main className="flex-1 px-4 py-5 md:px-8 md:py-7">
           <Outlet />
         </main>
       </div>

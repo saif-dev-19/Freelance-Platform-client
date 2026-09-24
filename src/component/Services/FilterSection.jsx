@@ -10,18 +10,18 @@ export default function FilterSection({
   handleSorting,
 }) {
   return (
-    <div className="w-full px-8">
-      <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-5 bg-white p-8 rounded-3xl border border-gray-200/50 shadow-[0_4px_20px_rgba(0,0,0,0.08)] max-w-7xl mx-auto">
+    <div className="w-full">
+      <div className="mx-auto flex max-w-7xl flex-col gap-4 rounded-2xl border border-slate-200 bg-white p-4 shadow-[0_12px_35px_rgba(15,23,42,0.08)] md:flex-row md:items-center md:justify-between md:p-5">
         {/* Category Filter */}
         <div className="flex items-center gap-3 w-full md:w-auto">
           <label className="flex items-center gap-2 text-sm font-bold text-[#0F172A] whitespace-nowrap">
-            <div className="p-2.5 bg-gradient-to-br from-[#6D28D9]/10 to-[#3B82F6]/10 rounded-xl">
-              <Filter size={20} className="text-[#6D28D9]" />
+              <div className="rounded-lg bg-[#FFF1E8] p-2">
+              <Filter size={18} className="text-[#F97316]" />
             </div>
             <span className="hidden sm:inline">Category</span>
           </label>
           <select
-            className="flex-1 md:flex-none px-5 py-3 border-2 border-gray-200 text-[#0F172A] text-sm font-medium rounded-2xl focus:ring-2 focus:ring-[#6D28D9] focus:border-[#6D28D9] focus:outline-none bg-[#F8FAFC] hover:bg-white transition-all"
+            className="flex-1 rounded-xl border border-slate-200 bg-[#F8FAFC] px-4 py-2.5 text-sm font-semibold text-[#0F172A] transition-all hover:bg-white focus:border-[#F97316] focus:outline-none focus:ring-2 focus:ring-[#F97316]/20 md:flex-none"
             value={selectedCategory}
             onChange={(e) => handleCategoryChange(e.target.value)}
           >
@@ -37,8 +37,8 @@ export default function FilterSection({
         {/* Search */}
         <div className="flex items-center gap-3 w-full md:flex-1">
           <label className="flex items-center gap-2 text-sm font-bold text-[#0F172A] whitespace-nowrap">
-            <div className="p-2.5 bg-gradient-to-br from-[#3B82F6]/10 to-[#0EA5E9]/10 rounded-xl">
-              <Search size={20} className="text-[#3B82F6]" />
+              <div className="rounded-lg bg-[#E8F6FF] p-2">
+              <Search size={18} className="text-[#0284C7]" />
             </div>
             <span className="hidden sm:inline">Search</span>
           </label>
@@ -47,20 +47,20 @@ export default function FilterSection({
             value={searchQuery}
             onChange={(e) => handleSearchQuery(e.target.value)}
             placeholder="Search services..."
-            className="flex-1 px-5 py-3 border-2 border-gray-200 text-[#0F172A] text-sm font-medium rounded-2xl focus:ring-2 focus:ring-[#3B82F6] focus:border-[#3B82F6] focus:outline-none bg-[#F8FAFC] hover:bg-white transition-all placeholder:text-gray-400"
+            className="flex-1 rounded-xl border border-slate-200 bg-[#F8FAFC] px-4 py-2.5 text-sm font-semibold text-[#0F172A] transition-all placeholder:text-slate-400 hover:bg-white focus:border-[#0284C7] focus:outline-none focus:ring-2 focus:ring-[#0284C7]/20"
           />
         </div>
 
         {/* Sorting */}
         <div className="flex items-center gap-3 w-full md:w-auto">
           <label className="flex items-center gap-2 text-sm font-bold text-[#0F172A] whitespace-nowrap">
-            <div className="p-2.5 bg-gradient-to-br from-[#0EA5E9]/10 to-[#22C55E]/10 rounded-xl">
-              <ArrowUpDown size={20} className="text-[#0EA5E9]" />
+              <div className="rounded-lg bg-[#EAF8F2] p-2">
+              <ArrowUpDown size={18} className="text-[#16A36A]" />
             </div>
             <span className="hidden sm:inline">Sort</span>
           </label>
           <select
-            className="flex-1 md:flex-none px-5 py-3 border-2 border-gray-200 text-[#0F172A] text-sm font-medium rounded-2xl focus:ring-2 focus:ring-[#0EA5E9] focus:border-[#0EA5E9] focus:outline-none bg-[#F8FAFC] hover:bg-white transition-all"
+            className="flex-1 rounded-xl border border-slate-200 bg-[#F8FAFC] px-4 py-2.5 text-sm font-semibold text-[#0F172A] transition-all hover:bg-white focus:border-[#16A36A] focus:outline-none focus:ring-2 focus:ring-[#16A36A]/20 md:flex-none"
             value={sortOrder}
             onChange={(e) => handleSorting(e.target.value)}
           >

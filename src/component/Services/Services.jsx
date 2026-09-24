@@ -1,9 +1,8 @@
 
-import { StarIcon, ChatBubbleLeftIcon } from "@heroicons/react/24/solid"
 import { Link } from "react-router"
-import default_img from "../../assets/images/default.png"
 import Pagination from "./Pagination"
 import { useState } from "react"
+import { useSearchParams } from "react-router"
 import useFetchServices from "../../hooks/useFetchServices"
 import useFetchCategories from "../../hooks/useFetchCategories"
 import FilterSection from "./FilterSection"
@@ -12,11 +11,27 @@ import ServiceItem from "./ServiceItem"
 
 
 const Services= () => {
+    const [searchParams] = useSearchParams()
     
     const [currentpage,setCurrnetpage] = useState(1)
-    const [selectedCategory,setSelectedCategory] = useState("")
+    const [selectedCategory,setSelectedCategory] = useState(() => searchParams.get("category_id") || "")
     const [searchQuery,setSearchQuery] =useState("")
     const [sortOrder,setSortOrder] = useState("")
+
+    const handleCategoryChange = (value) => {
+        setSelectedCategory(value)
+        setCurrnetpage(1)
+    }
+
+    const handleSearchQuery = (value) => {
+        setSearchQuery(value)
+        setCurrnetpage(1)
+    }
+
+    const handleSorting = (value) => {
+        setSortOrder(value)
+        setCurrnetpage(1)
+    }
 
     const {services,loading,totalpages} = useFetchServices(currentpage,selectedCategory,searchQuery,sortOrder);
     const categories = useFetchCategories();
@@ -41,22 +56,23 @@ const Services= () => {
     
   return (
     
-    <div className="min-h-screen bg-[#F8FAFC]">
-        <div className="pt-12 pb-8">
-            <div className="max-w-7xl mx-auto px-8 mb-10">
-                <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-[#6D28D9] via-[#3B82F6] to-[#0EA5E9] bg-clip-text text-transparent mb-3">
-                    Explore All Services
+    <div className="min-h-screen bg-[#EEF3F8]">
+        <div className="px-5 pb-8 pt-14 md:px-8">
+            <div className="mx-auto mb-8 max-w-7xl">
+                <p className="mb-3 text-sm font-bold uppercase tracking-[0.22em] text-[#F97316]">Find the right fit</p>
+                <h1 className="text-4xl font-black tracking-tight text-[#0F172A] md:text-6xl">
+                    Explore services
                 </h1>
-                <p className="text-gray-600 text-lg">Find the perfect service for your needs</p>
+                <p className="mt-3 max-w-2xl text-lg leading-relaxed text-slate-600">Compare focused expertise, clear delivery times, and real ratings in one place.</p>
             </div>
             <FilterSection 
                 categories={categories} 
                 selectedCategory={selectedCategory}
-                handleCategoryChange={setSelectedCategory}
+                handleCategoryChange={handleCategoryChange}
                 searchQuery={searchQuery}
-                handleSearchQuery={setSearchQuery}
+                handleSearchQuery={handleSearchQuery}
                 sortOrder={sortOrder}
-                handleSorting={setSortOrder}
+                handleSorting={handleSorting}
             />
         </div>
         {loading && (
@@ -68,8 +84,8 @@ const Services= () => {
         )}
 
         {!loading && services.length > 0 && (
-            <div className="px-8 py-8 max-w-7xl mx-auto">
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="mx-auto max-w-7xl px-5 py-8 md:px-8">
+                <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
                     {services.map((service) => (
                         <ServiceItem key={service.id} service={service} />
                     ))}

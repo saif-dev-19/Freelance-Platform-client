@@ -1,32 +1,26 @@
 
-import { Link, Navigate } from "react-router"
-import { useEffect, useState } from "react"
-import apiClient from "../../../api_services/api-client"
+import { useNavigate } from "react-router"
+import useFetchCategories from "../../../hooks/useFetchCategories"
 
 
 const Categories = () => {
-  const [categories,setCategories] = useState([])
-
-  useEffect(() =>{
-    apiClient.get("/categories")
-        .then(res => setCategories(res.data))
-  })
-
-  // const nevigate = useNavigate();
+  const categories = useFetchCategories()
+  const navigate = useNavigate()
 
   const handleCategoryClick = (category) => {
-    console.log("Selected category:", category.title)
+    navigate(`/services?category_id=${category.id}`)
   }
 
   return (
-    <div className="w-full px-8 py-20 mx-auto bg-white">
+    <section className="w-full border-b border-slate-200/70 bg-[#F5F7FA] px-8 py-24">
       {/* Header Section */}
       <div className="flex items-center justify-between mb-16 max-w-7xl mx-auto">
         <div>
-          <h1 className="text-4xl md:text-5xl font-extrabold bg-gradient-to-r from-[#6D28D9] via-[#3B82F6] to-[#0EA5E9] bg-clip-text">
-            Browse by Category
+          <p className="mb-3 text-sm font-bold uppercase tracking-[0.22em] text-[#3B82F6]">Find your lane</p>
+          <h1 className="text-4xl font-black tracking-tight text-[#0F172A] md:text-5xl">
+            Browse by category
           </h1>
-          <p className="text-gray-600 text-lg mt-3">Explore services across different categories</p>
+          <p className="mt-3 max-w-xl text-lg leading-relaxed text-slate-600">Start with a category, compare the signal, and find the specialist that fits your next project.</p>
         </div>
       </div>
 
@@ -52,10 +46,13 @@ const Categories = () => {
             <h3 className="relative text-center text-sm font-bold text-[#0F172A] leading-tight group-hover:text-[#6D28D9] transition-colors duration-300">
               {category.name}
             </h3>
+            <p className="relative text-center text-xs text-gray-500 mt-2">
+              {category.service_count || 0} {category.service_count === 1 ? 'service' : 'services'}
+            </p>
           </div>
         ))}
       </div>
-    </div>
+    </section>
   )
 }
 

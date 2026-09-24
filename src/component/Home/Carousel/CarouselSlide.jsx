@@ -12,9 +12,9 @@ const CarouselSlide = ({
 }) => {
   return (
     <section
-      className="relative w-full h-[600px] md:h-[700px] flex justify-center items-center px-4 md:px-8 overflow-hidden"
+      className="relative flex min-h-[650px] w-full items-center justify-center overflow-hidden px-4 py-16 md:min-h-[720px] md:px-8"
       style={{ 
-        background: `linear-gradient(135deg, ${bg_color} 0%, ${bg_color}dd 100%)`,
+        background: `linear-gradient(120deg, ${bg_color} 0%, #0F172A 125%)`,
       }}
     >
       {/* Subtle Background Pattern */}
@@ -23,30 +23,30 @@ const CarouselSlide = ({
         <div className="absolute bottom-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl translate-x-1/2 translate-y-1/2"></div>
       </div>
 
-      <div className="relative flex flex-col md:flex-row items-center max-w-7xl w-full mx-auto px-4 md:px-8 justify-between gap-8 md:gap-12 z-10">
+      <div className="relative z-10 mx-auto flex w-full max-w-7xl flex-col items-center justify-between gap-12 px-4 md:flex-row md:px-8">
         {/* Left Content */}
         <motion.div 
           initial={{ opacity: 0, x: -50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="w-full md:w-1/2 text-center md:text-left space-y-6"
+          className="w-full space-y-6 text-center md:w-[54%] md:text-left"
         >
           {/* Badge */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.1 }}
-            className="inline-flex items-center gap-2 bg-white/20 backdrop-blur-md border border-white/30 rounded-full px-4 py-2"
+            className="inline-flex items-center gap-2 rounded-full border border-white/25 bg-white/10 px-4 py-2 backdrop-blur-md"
           >
             <span className="w-2 h-2 bg-[#22C55E] rounded-full animate-pulse"></span>
-            <span className="text-white text-sm font-semibold">New Features Available</span>
+            <span className="text-sm font-semibold uppercase tracking-[0.18em] text-white/90">A better way to get work done</span>
           </motion.div>
 
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-extrabold leading-tight tracking-tight"
+            className="text-4xl font-black leading-[0.98] tracking-tight sm:text-5xl md:text-6xl lg:text-7xl"
             style={{ color: title_color }}
           >
             {title}
@@ -56,7 +56,7 @@ const CarouselSlide = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.4 }}
-            className="text-base sm:text-lg md:text-xl font-normal leading-relaxed opacity-90"
+            className="max-w-xl text-base font-normal leading-relaxed opacity-90 sm:text-lg md:text-xl"
             style={{ color: sub_color }}
           >
             {subtitle}
@@ -66,13 +66,13 @@ const CarouselSlide = ({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.6 }}
-            className="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-2"
+            className="flex flex-col justify-center gap-4 pt-2 sm:flex-row md:justify-start"
           >
             <Link to="/services">
               <motion.button 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-white text-[#0F172A] px-8 py-4 text-base font-bold rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300"
+                className="rounded-xl bg-white px-8 py-4 text-base font-bold text-[#0F172A] shadow-xl transition-all duration-300 hover:bg-[#F97316] hover:text-white hover:shadow-2xl"
               >
                 Explore Services
               </motion.button>
@@ -81,12 +81,17 @@ const CarouselSlide = ({
               <motion.button 
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="bg-white/10 backdrop-blur-md border-2 border-white/30 text-white px-8 py-4 text-base font-bold rounded-2xl hover:bg-white/20 transition-all duration-300"
+                className="rounded-xl border border-white/35 bg-white/10 px-8 py-4 text-base font-bold text-white backdrop-blur-md transition-all duration-300 hover:bg-white/20"
               >
                 Learn More
               </motion.button>
             </Link>
           </motion.div>
+          <div className="flex flex-wrap justify-center gap-6 pt-3 text-left text-white/80 md:justify-start">
+            <div><strong className="block text-2xl text-white">12k+</strong><span className="text-xs uppercase tracking-wider">active briefs</span></div>
+            <div><strong className="block text-2xl text-white">4.9/5</strong><span className="text-xs uppercase tracking-wider">client rating</span></div>
+            <div><strong className="block text-2xl text-white">48h</strong><span className="text-xs uppercase tracking-wider">quick starts</span></div>
+          </div>
         </motion.div>
 
         {/* Right Images - Small, separated, transparent background */}
@@ -94,17 +99,17 @@ const CarouselSlide = ({
           initial={{ opacity: 0, x: 50 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}
-          className="w-full md:w-1/2 flex justify-center items-center gap-6"
+          className="relative flex w-full items-center justify-center gap-4 md:w-[46%] md:gap-6"
         >
           {image1 && (
             <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.3 }}
-              className="flex-shrink-0"
+              className="flex-shrink-0 rounded-[2rem] border border-white/20 bg-white/10 p-3 shadow-2xl backdrop-blur-sm"
             >
               <img
-                className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 object-contain drop-shadow-2xl transform hover:scale-110 transition-transform duration-500"
+                className="h-40 w-40 object-contain drop-shadow-2xl transition-transform duration-500 hover:scale-110 sm:h-48 sm:w-48 md:h-56 md:w-56"
                 src={image1}
                 alt="carousel-img1"
               />
@@ -115,7 +120,7 @@ const CarouselSlide = ({
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.8, delay: 0.5 }}
-              className="flex-shrink-0"
+              className="mt-16 flex-shrink-0 rounded-[2rem] border border-white/20 bg-white/10 p-3 shadow-2xl backdrop-blur-sm"
             >
               <img
                 className="w-40 h-40 sm:w-48 sm:h-48 md:w-56 md:h-56 object-contain drop-shadow-2xl transform hover:scale-110 transition-transform duration-500"

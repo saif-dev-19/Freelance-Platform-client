@@ -11,7 +11,7 @@ import {
 
 // import React, { useState } from 'react';
 import useAuthContext from '../../hooks/useAuthContext';
-import { Link, useNavigate } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 
 
 const Sidebar = ({ isOpen, onClose }) => {
@@ -42,7 +42,7 @@ const sellerMenus = [
 ];
 
 
-  const menuItems = user.role === "Seller" ? sellerMenus : user.role === "Buyer" ? buyerMenus : adminMenus ;
+  const menuItems = user?.role === "Seller" ? sellerMenus : user?.role === "Buyer" ? buyerMenus : adminMenus ;
 
   return (
     <>
@@ -56,31 +56,31 @@ const sellerMenus = [
 
       {/* Sidebar */}
       <div
-        className={`fixed top-0 left-0 min-h-full bg-gray-200 text-black shadow-lg  border-base-200 z-50 transition-transform duration-300 ease-in-out ${
+        className={`fixed left-0 top-0 z-50 min-h-full w-64 border-r border-slate-200 bg-[#0F172A] text-white shadow-xl transition-transform duration-300 ease-in-out ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         } lg:translate-x-0 lg:static lg:z-auto w-64`}
       >
         <div className="flex flex-col h-full">
           {/* Logo/Brand */}
-          <div className="flex items-center justify-between p-4 border-base-300">
+          <div className="flex items-center justify-between border-b border-white/10 p-5">
             <div className="flex items-center gap-2">
               <button
                     onClick={() => navigate("/")}
-                    className="text-green-700 text-2xl ml-2 font-bold"
+                    className="ml-2 text-2xl font-black tracking-tight text-white"
                 >
-                    Virtual<span className="font-bold text-3xl">B</span>azar
+                    Virtual<span className="text-[#F97316]">B</span>azar<span className="text-[#38BDF8]">.</span>
             </button>
             </div>
             <button
               onClick={onClose}
-              className="btn btn-ghost btn-sm btn-circle lg:hidden"
+              className="btn btn-ghost btn-sm btn-circle text-white lg:hidden"
             >
               <i className="bi bi-x-lg"></i>
             </button>
           </div>
 
           {/* User Info */}
-          <div className="p-4  border-base-300">
+          <div className="border-b border-white/10 p-5">
             <div className="flex items-center gap-3">
               <div className="avatar text-black">
                 <div className="w-10 rounded-full">
@@ -88,7 +88,6 @@ const sellerMenus = [
                     <img
                       alt="Profile"
                       src={user.avatar}
-                      crossOrigin="anonymous"
                       className="text-black rounded-full"
                     />
                   ) : (
@@ -99,8 +98,8 @@ const sellerMenus = [
                 </div>
               </div>
               <div className="flex-1 min-w-0">
-                <div className="font-medium text-neutral truncate">{user?.first_name+ " " + user?.last_name}</div>
-                <div className="text-sm text-neutral/70 truncate">{user?.email}</div>
+                <div className="truncate font-semibold text-white">{user?.first_name+ " " + user?.last_name}</div>
+                <div className="truncate text-sm text-slate-400">{user?.email}</div>
                 <div className={`badge badge-xs mt-1 ${
                   user?.role === "Buyer" ? 'badge-info' :
                   user?.role === 'Seller' ? 'badge-warning' : 'badge-error'
@@ -112,16 +111,19 @@ const sellerMenus = [
           </div>
 
           {/* Navigation Menu */}
-          <nav className="flex-1 overflow-y-auto py-4 ">
-            <ul className="menu menu-md px-4">
+          <nav className="flex-1 overflow-y-auto py-5">
+            <ul className="space-y-2 px-3">
               {menuItems.map((item,index) => (
-                <li key={index}
-                    className="mb-4"
-                >
-                  <Link to={item.to} className="flex items-center">
-                        <item.icon className="h-4 w-4 size-3" />
-                    <span className="font-bold ">{item.label}</span>
-                </Link>
+                <li key={index}>
+                  <NavLink
+                    to={item.to}
+                    end={item.to === "/dashboard"}
+                    onClick={() => window.innerWidth < 1024 && onClose()}
+                    className={({ isActive }) => `flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-semibold transition ${isActive ? "bg-[#F97316] text-white shadow-lg shadow-orange-950/20" : "text-slate-300 hover:bg-white/10 hover:text-white"}`}
+                  >
+                    <item.icon className="h-5 w-5" />
+                    <span>{item.label}</span>
+                  </NavLink>
                 </li>
               ))}
             </ul>

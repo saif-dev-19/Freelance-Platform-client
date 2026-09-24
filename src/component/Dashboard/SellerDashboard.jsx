@@ -20,15 +20,20 @@ const SellerDashboard = () => {
   console.log("service",services);
 
   useEffect(() => {
-    setLoading(true)
-    try{
-      authApiClient.get("/seller-earnings/").
-      then((res) => setTotalEarninngs(res.data.total_earnings))
-    }catch(error){
-      console.log(error);
-    }finally{
-      setLoading(false)
-    }
+    let active = true;
+    setLoading(true);
+    authApiClient.get("/seller-earnings/")
+      .then((res) => {
+        if (active) setTotalEarninngs(res.data.total_earnings);
+      })
+      .catch((error) => console.log(error))
+      .finally(() => {
+        if (active) setLoading(false);
+      });
+
+    return () => {
+      active = false;
+    };
   },[])
 
   const stats = [
@@ -60,7 +65,7 @@ const SellerDashboard = () => {
   // };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-7">
       {/* Welcome Section */}
       <WelcomeCard
         user={user} 
@@ -69,16 +74,17 @@ const SellerDashboard = () => {
       />
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {stats.map((stat, index) => (
           <StatCard key={index} {...stat} />
         ))}
       </div>
 
       {/* Quick Actions */}
-      <div className="card bg-white shadow-sm border border-base-300">
-        <div className="card-body p-6">
-          <h2 className="text-lg font-semibold text-neutral mb-4">Seller Quick Actions</h2>
+      <div className="rounded-2xl border border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.06)]">
+        <div className="p-5 md:p-6">
+          <p className="mb-1 text-xs font-bold uppercase tracking-[0.18em] text-[#F97316]">Your workspace</p>
+          <h2 className="mb-4 text-xl font-black text-[#0F172A]">Quick actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {quickActions.map((action, index) => (
               <QuickAction key={index} {...action}/>
@@ -90,10 +96,10 @@ const SellerDashboard = () => {
       {/* Seller Specific Content */}
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* Recent Orders */}
-        <div className="card bg-white shadow-sm border border-base-300">
-      <div className="card-body p-6">
-        <h2 className="text-lg font-semibold text-neutral mb-4">
-          Recent Orders
+        <div className="rounded-2xl border border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.06)]">
+      <div className="p-5 md:p-6">
+        <h2 className="mb-4 text-xl font-black text-[#0F172A]">
+          Recent orders
         </h2>
 
         {loading ? (
@@ -105,11 +111,11 @@ const SellerDashboard = () => {
             {recentOrders.map((order, index) => (
               <li
                 key={order.id}
-                className="flex items-center justify-between border-b border-gray-200 pb-4"
+                className="flex items-center justify-between rounded-xl border border-slate-100 p-3"
               >
                 {/* Avatar */}
                 <div className="flex items-center gap-4">
-                  <div className="w-12 h-12 rounded-full bg-blue-500 flex items-center justify-center text-white font-bold">
+                  <div className="flex h-11 w-11 items-center justify-center rounded-xl bg-[#0F172A] font-bold text-white">
                     {order.buyer.charAt(0)}
                   </div>
                   <div className="flex flex-col">

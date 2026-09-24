@@ -45,7 +45,7 @@ const Features = () => {
     };
 
     return (
-        <section className='px-8 py-24 bg-[#F8FAFC]'>
+        <section className='border-b border-slate-200/70 bg-white px-8 py-24'>
             <motion.div 
                 initial={{ opacity: 0, y: -20 }}
                 whileInView={{ opacity: 1, y: 0 }}
@@ -53,7 +53,8 @@ const Features = () => {
                 transition={{ duration: 0.6 }}
                 className="text-center mb-16"
             >
-                <h1 className="font-extrabold text-4xl md:text-5xl bg-gradient-to-r from-[#6D28D9] via-[#3B82F6] to-[#0EA5E9] bg-clip-text mb-4">
+                <p className="mb-3 text-sm font-bold uppercase tracking-[0.22em] text-[#3B82F6]">A calmer way to work</p>
+                <h1 className="mb-4 text-4xl font-black tracking-tight text-[#0F172A] md:text-5xl">
                     Why Choose Us
                 </h1>
                 <p className="text-gray-600 text-lg max-w-2xl mx-auto">

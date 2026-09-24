@@ -8,7 +8,13 @@ const useFetchServices = (currentpage,selectedCategory,searchQuery,sortOrder) =>
     useEffect(()=>{
         const fetchservices=async () =>{
             setLoading(true)
-            const url = `/services/?page=${currentpage}&category_id=${selectedCategory}&search=${searchQuery}&ordering=${sortOrder}`
+            const params = new URLSearchParams({
+                page: currentpage,
+                category_id: selectedCategory,
+                search: searchQuery,
+                ordering: sortOrder,
+            })
+            const url = `/services/?${params.toString()}`
             try{
                 const response = await apiClient.get(url);
                 const data = await response.data;

@@ -6,7 +6,7 @@ import StatCard from './shared/StatCard';
 import WelcomeCard from './shared/WelcomeCard';
 import useFetchOrders from '../../hooks/useFetchOrders';
 import useFetchReviews from '../../hooks/useFetchReviews';
-import authApiClient from '../../api_services/auth-api-client';
+import default_img from '../../assets/images/default.png';
 
 
 const BuyerDashboard = () => {
@@ -51,17 +51,8 @@ const BuyerDashboard = () => {
   
 
   useEffect(() => {
-    authApiClient.get("/orders/") 
-      .then(res => {
-        
-        const sortedOrders = res.data.sort((a, b) => 
-          new Date(b.created_at) - new Date(a.created_at)
-        );
-
-        setOrders(sortedOrders.slice(0, 5));
-      })
-      .catch(err => console.error("Failed to fetch orders:", err));
-  }, []);
+    setOrders(orders.slice(0, 5));
+  }, [orders]);
 
   console.log("orders",recentOrders);
 
@@ -132,7 +123,7 @@ const BuyerDashboard = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-7">
       {/* Welcome Section */}
       <WelcomeCard
         user={user}
@@ -141,16 +132,17 @@ const BuyerDashboard = () => {
       />
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 ">
+      <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {stats.map((stat, index) => (
           <StatCard key={index} {...stat} />
         ))}
       </div>
 
       {/* Quick Actions */}
-      <div className="card bg-white shadow-sm border border-base-300">
-        <div className="card-body p-6">
-          <h2 className="text-lg font-semibold text-neutral mb-4">Quick Actions</h2>
+      <div className="rounded-2xl border border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.06)]">
+        <div className="p-5 md:p-6">
+          <p className="mb-1 text-xs font-bold uppercase tracking-[0.18em] text-[#0284C7]">Keep moving</p>
+          <h2 className="mb-4 text-xl font-black text-[#0F172A]">Quick actions</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {quickActions.map((action, index) => (
               <QuickAction key={index} {...action} />
@@ -160,32 +152,39 @@ const BuyerDashboard = () => {
       </div>
 
       {/* Buyer Specific Content */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      <div className="grid grid-cols-1 gap-6 lg:grid-cols-2">
         {/* Recent Orders */}
-        <div className="card bg-white shadow-sm border border-base-300">
-          <div className="card-body p-6">
+        <div className="rounded-2xl border border-slate-200 bg-white shadow-[0_8px_24px_rgba(15,23,42,0.06)]">
+          <div className="p-5 md:p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-neutral">Recent Orders</h3>
+              <h3 className="text-xl font-black text-[#0F172A]">Recent orders</h3>
               <button className="btn btn-sm btn-ghost">
                 <i className="bi bi-arrow-right"></i>
               </button>
             </div>
             <div className="space-y-4">
               {recentOrders.map((order, index) => (
-                <div key={index} className="flex items-center gap-3 p-3 rounded-lg hover:bg-base-100 transition-colors">
+                <div key={index} className="flex items-center gap-3 rounded-xl border border-slate-100 p-3 transition-colors hover:bg-[#F8FAFC]">
                   <div className="avatar">
                     <div className="w-12 rounded-lg">
-                      <img src={order?.service.images[0]} alt={order.service.title} crossOrigin="anonymous" />
+                      <img
+                        src={order?.service?.images?.[0]?.image || default_img}
+                        alt={order?.service?.title || 'Service'}
+                        onError={(event) => {
+                          event.currentTarget.onerror = null;
+                          event.currentTarget.src = default_img;
+                        }}
+                      />
                     </div>
                   </div>
                   <div className="flex-1">
                     <div className="flex items-center gap-2">
-                      <p className="text-sm font-medium text-neutral">{order.service.title}</p>
+                      <p className="text-sm font-medium text-neutral">{order?.service?.title || 'Service unavailable'}</p>
                       <div className={`badge badge-xs ${getStatusColor(order.status)}`}>
                         {order.status}
                       </div>
                     </div>
-                    <p className="text-xs text-neutral/70">{order.service.seller} • {order.created_at}</p>
+                    <p className="text-xs text-neutral/70">{order?.service?.seller || 'Seller unavailable'} • {order.created_at}</p>
                   </div>
                   <div className="text-right">
                     <p className="text-sm font-medium text-neutral">{order.total_price}</p>

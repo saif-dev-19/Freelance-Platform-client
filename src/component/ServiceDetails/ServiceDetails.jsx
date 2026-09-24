@@ -24,7 +24,7 @@ const ServiceDetails = () =>{
             console.log("response",res.data);
             setLoading(false)
         });
-    },[])
+    },[serviceID])
 
     const handleOrderNow = () => {
       navigate(`/services/${serviceID}/order`);
@@ -115,17 +115,19 @@ const ServiceDetails = () =>{
                   <div className="flex items-center gap-1">
                     <Heart className="h-5 w-5 text-muted-foreground" />
                   </div>
-                  {/* <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2">
                     <div className="flex items-center">
                       {Array.from({ length: 5 }).map((_, i) => (
                         <FaStar
                           key={i}
-                          className={`h-4 w-4 ${i < Math.round(rating) ? 'text-yellow-400' : 'text-gray-300'}`}
+                          className={`h-4 w-4 ${i < Math.round(Number(service?.rating || 0)) ? 'text-yellow-400' : 'text-gray-300'}`}
                         />
                       ))}
                     </div>
-                    <div className="text-sm">{rating} ({ratingCount})</div>
-                  </div> */}
+                    <div className="text-sm">
+                      {service?.rating == null ? '0.0' : Number(service.rating).toFixed(1)} ({service?.reviews || 0})
+                    </div>
+                  </div>
                 </div>
               </div>
 
